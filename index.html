@@ -1,0 +1,1005 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>Diversity & Living Things Online Board Game</title>
+
+  <style>
+    :root{
+      --card: rgba(255,255,255,.88);
+      --card-strong: rgba(255,255,255,.95);
+      --ink: #0e1a2b;
+      --muted: rgba(14,26,43,.65);
+      --shadow: 0 10px 30px rgba(0,0,0,.18);
+      --radius: 18px;
+
+      --page-pad: clamp(12px, 2.2vw, 26px);
+
+      --gap: clamp(8px, 1.2vw, 14px);
+      --btn-font: clamp(12px, 1.2vw, 15px);
+      --btn-pad-y: clamp(10px, 1.1vw, 14px);
+      --btn-pad-x: clamp(12px, 1.2vw, 16px);
+
+      --title-font: clamp(14px, 1.4vw, 18px);
+      --small-font: clamp(11px, 1.1vw, 13px);
+
+      --tile-min-h: clamp(70px, 9vh, 96px);
+      --tile-title: clamp(10px, 1.0vw, 12px);
+
+      --icon-size: clamp(16px, 2.2vw, 28px);
+      --grid-gap: clamp(8px, 1vw, 12px);
+    }
+
+    *{ box-sizing: border-box; }
+    html, body{ height: 100%; }
+
+    body{
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--ink);
+      background: #eaf1ff;
+      overflow: hidden;
+      position: relative;
+      touch-action: manipulation;
+    }
+
+    body::before{
+      content:"";
+      position: fixed;
+      inset: 0;
+      background-image: url("https://commons.wikimedia.org/wiki/Special:FilePath/The_Science_Laboratory.jpg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      opacity: .50;
+      filter: saturate(1.05) contrast(1.05);
+      z-index: -2;
+    }
+    body::after{
+      content:"";
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at 20% 10%, rgba(255,255,255,.60), rgba(255,255,255,.10) 55%, rgba(255,255,255,.35));
+      z-index: -1;
+    }
+
+    .page{
+      height: 100vh;
+      padding: max(var(--page-pad), env(safe-area-inset-top))
+               max(var(--page-pad), env(safe-area-inset-right))
+               max(var(--page-pad), env(safe-area-inset-bottom))
+               max(var(--page-pad), env(safe-area-inset-left));
+      display: flex;
+      flex-direction: column;
+      gap: var(--gap);
+      min-height: 0;
+    }
+
+    .wrap{
+      flex: 1 1 auto;
+      min-height: 0;
+      display: grid;
+      gap: var(--gap);
+      grid-template-columns: minmax(300px, 420px) 1fr;
+    }
+
+    @media (max-width: 980px){
+      .wrap{ grid-template-columns: 1fr; }
+    }
+
+    .panel, .boardShell{
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(255,255,255,.45);
+      backdrop-filter: blur(6px);
+      min-height: 0;
+    }
+
+    .panel{
+      padding: clamp(10px, 1.2vw, 14px);
+      display: flex;
+      flex-direction: column;
+      gap: var(--gap);
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    .brand{
+      display:flex; align-items:center; justify-content:space-between; gap: 10px;
+      padding: 10px 10px;
+      border-radius: 14px;
+      background: var(--card-strong);
+      border: 1px solid rgba(0,0,0,.06);
+    }
+    .brand h1{
+      margin: 0;
+      font-size: var(--title-font);
+      line-height: 1.2;
+      letter-spacing: .2px;
+    }
+    .brand p{
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: var(--small-font);
+    }
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 7px 9px;
+      border-radius: 999px;
+      background: rgba(14,26,43,.08);
+      font-size: var(--small-font);
+      color: rgba(14,26,43,.85);
+      white-space: nowrap;
+    }
+
+    .controls{
+      display:grid;
+      gap: var(--gap);
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    .row{
+      display:flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items:center;
+    }
+
+    button{
+      appearance:none;
+      border: 0;
+      border-radius: 14px;
+      padding: var(--btn-pad-y) var(--btn-pad-x);
+      cursor: pointer;
+      font-weight: 900;
+      font-size: var(--btn-font);
+      color: white;
+      background: rgba(20,80,200,.92);
+      box-shadow: 0 8px 18px rgba(20,80,200,.22);
+      transition: transform .06s ease, filter .15s ease;
+      min-height: 44px;
+      min-width: 44px;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    button:hover{ filter: brightness(1.03); }
+    button:active{ transform: translateY(1px); }
+    button:disabled{
+      opacity: .55;
+      cursor: not-allowed;
+      box-shadow: none;
+      filter: grayscale(.15);
+    }
+    button.secondary{
+      background: rgba(14,26,43,.86);
+      box-shadow: 0 8px 18px rgba(14,26,43,.20);
+    }
+    button.ghost{
+      background: rgba(255,255,255,.80);
+      color: rgba(14,26,43,.92);
+      border: 1px solid rgba(0,0,0,.10);
+      box-shadow: none;
+    }
+
+    .stat{
+      background: rgba(255,255,255,.88);
+      border: 1px solid rgba(0,0,0,.08);
+      border-radius: 14px;
+      padding: 10px;
+      flex: 1 1 180px;
+      min-width: 160px;
+    }
+    .stat h2{
+      margin:0 0 6px;
+      font-size: clamp(12px, 1.2vw, 14px);
+      color: rgba(14,26,43,.85);
+    }
+    .big{
+      font-size: clamp(24px, 3.2vw, 34px);
+      font-weight: 1000;
+      letter-spacing: .5px;
+      line-height: 1;
+    }
+    .muted{
+      color: var(--muted);
+      font-size: var(--small-font);
+    }
+
+    .players{
+      display:grid;
+      gap: 10px;
+      overflow: auto;
+      -webkit-overflow-scrolling: touch;
+      padding-right: 2px;
+      min-height: 0;
+      flex: 1 1 auto;
+    }
+    .playerCard{
+      background: rgba(255,255,255,.88);
+      border: 1px solid rgba(0,0,0,.08);
+      border-radius: 14px;
+      padding: 10px 12px;
+      display:flex;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .playerLeft{
+      display:flex; gap: 10px; align-items:center;
+      min-width: 0;
+    }
+    .token{
+      width: 18px; height: 18px;
+      border-radius: 6px;
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,.8);
+      flex: 0 0 auto;
+    }
+    .playerName{
+      font-weight: 1000;
+      font-size: clamp(12px, 1.2vw, 14px);
+      line-height: 1.2;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .playerMeta{
+      font-size: clamp(11px, 1.1vw, 12px);
+      color: var(--muted);
+    }
+
+    .badges{
+      display:flex; gap: 6px; flex-wrap: wrap;
+      justify-content:flex-end;
+      align-items:center;
+      max-width: 160px;
+    }
+    .badge{
+      font-size: 12px;
+      padding: 5px 8px;
+      border-radius: 999px;
+      background: rgba(14,26,43,.08);
+      color: rgba(14,26,43,.85);
+      border: 1px solid rgba(0,0,0,.06);
+    }
+
+    .boardShell{
+      padding: 12px;
+      display:flex;
+      flex-direction: column;
+      min-height: 0;
+      overflow: hidden;
+    }
+    .boardHeader{
+      display:flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 12px;
+      padding: 8px 10px 10px;
+      flex: 0 0 auto;
+    }
+    .boardHeader h2{ margin:0; font-size: clamp(13px, 1.3vw, 16px); }
+    .boardHeader .muted{ margin:0; }
+
+    .board{
+      flex: 1 1 auto;
+      min-height: 0;
+      background: rgba(255,255,255,.65);
+      border: 1px solid rgba(0,0,0,.10);
+      border-radius: 16px;
+      padding: 12px;
+      display:grid;
+      gap: var(--grid-gap);
+      overflow: auto;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
+    }
+
+    @media (min-width: 1200px){ .board{ grid-template-columns: repeat(8, 1fr); } }
+    @media (min-width: 900px) and (max-width: 1199px){ .board{ grid-template-columns: repeat(7, 1fr); } }
+    @media (min-width: 650px) and (max-width: 899px){ .board{ grid-template-columns: repeat(6, 1fr); } }
+    @media (max-width: 649px){ .board{ grid-template-columns: repeat(4, 1fr); } }
+
+    .tile{
+      position: relative;
+      border-radius: 14px;
+      padding: 10px 10px 8px;
+      background: rgba(255,255,255,.90);
+      border: 1px solid rgba(0,0,0,.10);
+      cursor:pointer;
+      min-height: var(--tile-min-h);
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      transition: transform .06s ease, filter .15s ease;
+      user-select:none;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+      overflow: hidden;
+    }
+    .tile:hover{ filter: brightness(1.02); transform: translateY(-1px); }
+    .tile:active{ transform: translateY(0px); }
+
+    .tileTop{
+      display:flex; align-items:flex-start; gap: 8px;
+      min-width: 0;
+    }
+    .icon{
+      width: var(--icon-size);
+      height: var(--icon-size);
+      flex: 0 0 auto;
+      object-fit: contain;
+      filter: drop-shadow(0 2px 6px rgba(0,0,0,.12));
+    }
+    .tileTitle{
+      font-weight: 950;
+      font-size: var(--tile-title);
+      line-height: 1.15;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+    }
+    .tileMeta{
+      display:flex; justify-content:space-between; align-items:center;
+      font-size: clamp(10px, 1.0vw, 11px);
+      color: var(--muted);
+    }
+    .tileIndex{
+      font-weight: 900;
+      color: rgba(14,26,43,.55);
+    }
+    .occupants{
+      position:absolute;
+      right: 8px;
+      top: 8px;
+      display:flex;
+      gap: 5px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      width: 64px;
+      pointer-events: none;
+    }
+    .dot{
+      width: 10px; height: 10px;
+      border-radius: 4px;
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,.85), 0 2px 8px rgba(0,0,0,.12);
+    }
+
+    .modalBackdrop{
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.42);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding: 18px;
+      z-index: 50;
+      touch-action: none;
+    }
+    .modal{
+      width: min(820px, 100%);
+      max-height: min(82vh, 780px);
+      background: rgba(255,255,255,.96);
+      border-radius: 18px;
+      border: 1px solid rgba(0,0,0,.12);
+      box-shadow: 0 20px 60px rgba(0,0,0,.25);
+      overflow:hidden;
+      display:flex;
+      flex-direction: column;
+    }
+    .modalHeader{
+      padding: 14px 16px;
+      background: rgba(14,26,43,.06);
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap: 10px;
+      flex: 0 0 auto;
+    }
+    .modalHeader h3{
+      margin:0;
+      font-size: clamp(14px, 1.4vw, 16px);
+      line-height: 1.25;
+    }
+    .modalBody{
+      padding: 14px 16px 16px;
+      display:grid;
+      gap: 10px;
+      overflow: auto;
+      -webkit-overflow-scrolling: touch;
+      flex: 1 1 auto;
+    }
+    .challenge{
+      background: rgba(255,255,255,.95);
+      border: 1px solid rgba(0,0,0,.10);
+      border-radius: 14px;
+      padding: 12px;
+      font-size: var(--small-font);
+    }
+    .challenge b{ display:block; margin-bottom: 4px; }
+    .modalFooter{
+      padding: 12px 16px 16px;
+      display:flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content:flex-end;
+      flex: 0 0 auto;
+    }
+
+    .turnOverlay{
+      position: fixed;
+      inset: 0;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding: 18px;
+      z-index: 60;
+      background: rgba(0,0,0,.50);
+    }
+    .turnCard{
+      width: min(560px, 100%);
+      background: rgba(255,255,255,.96);
+      border-radius: 18px;
+      border: 1px solid rgba(0,0,0,.12);
+      box-shadow: 0 20px 60px rgba(0,0,0,.28);
+      padding: 18px;
+      text-align:center;
+    }
+    .turnCard h3{
+      margin: 0 0 8px;
+      font-size: clamp(18px, 2.4vw, 22px);
+      line-height: 1.2;
+      font-weight: 1000;
+    }
+    .turnCard p{
+      margin: 0 0 14px;
+      color: rgba(14,26,43,.70);
+      font-size: var(--small-font);
+    }
+    .turnCard .playBtn{
+      width: 100%;
+      font-size: clamp(14px, 1.6vw, 16px);
+      padding: 14px 16px;
+      border-radius: 16px;
+    }
+
+    footer{
+      flex: 0 0 auto;
+      background: rgba(255,255,255,.70);
+      border: 1px solid rgba(0,0,0,.07);
+      border-radius: 12px;
+      padding: 6px 10px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.08);
+      backdrop-filter: blur(6px);
+      font-size: 9px;
+      color: rgba(14,26,43,.80);
+      line-height: 1.2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+    footer a{
+      color: rgba(20,80,200,.95);
+      font-weight: 900;
+      text-decoration: none;
+    }
+    footer a:hover{ text-decoration: underline; }
+    footer .footerLine{
+      max-width: 100%;
+      white-space: normal;
+      overflow: visible;
+      text-overflow: clip;
+      word-break: break-word;
+    }
+
+    @media (max-width: 980px){
+      .wrap{
+        grid-template-columns: 1fr;
+        grid-template-rows: minmax(240px, 46vh) minmax(0, 1fr);
+      }
+      .panel{
+        overflow: auto;
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior: contain;
+      }
+      .controls{ overflow: visible; }
+      .players{ overflow: visible; }
+      .board{ overflow: auto; }
+    }
+
+    @media (max-width: 520px){
+      .wrap{
+        grid-template-rows: minmax(240px, 52vh) minmax(0, 1fr);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+    <div class="wrap">
+      <aside class="panel">
+        <div class="brand">
+          <div>
+            <h1>Diversity & Living Things Board Game</h1>
+            <p>Groups of 4 | Tap tiles for challenges</p>
+          </div>
+          <div class="pill">Scroll panel + board on phones</div>
+        </div>
+
+        <div class="controls">
+          <div class="row">
+            <button id="btnRoll">🎲 Roll Dice</button>
+            <button class="secondary" id="btnEndTurn">End Turn →</button>
+            <button class="ghost" id="btnReset">Reset Game</button>
+          </div>
+
+          <div class="row">
+            <div class="stat">
+              <h2>Dice</h2>
+              <div class="big" id="diceVal">—</div>
+              <div class="muted" id="diceHint">Roll 1–6 (movement applies only if badge is awarded)</div>
+            </div>
+            <div class="stat">
+              <h2>Current Player</h2>
+              <div class="big" id="currentPlayer">1</div>
+              <div class="muted" id="turnHint">Press “Play!” to start the turn.</div>
+            </div>
+          </div>
+
+          <div class="stat">
+            <h2>Win condition</h2>
+            <div class="muted">First player to earn <b>5 badges</b> wins. (Max: <b>1 badge per turn</b>.)</div>
+          </div>
+
+          <div class="players" id="players"></div>
+        </div>
+      </aside>
+
+      <main class="boardShell">
+        <div class="boardHeader">
+          <div>
+            <h2>Clickable Board</h2>
+            <p class="muted">Scroll inside the board if needed (tablet/phone friendly).</p>
+          </div>
+          <div class="pill">Tap tiles</div>
+        </div>
+
+        <div class="board" id="board"></div>
+      </main>
+    </div>
+
+    <footer>
+      <div class="footerLine">
+        Created by Lucas Ferreira (MSc. Physics Education, PhD student Science Education (UnB/IF/PPGEduC)
+        &nbsp;&nbsp;|&nbsp;&nbsp;
+        <a href="https://github.com/cometsinthesky" target="_blank" rel="noopener noreferrer">GitHub Page</a>
+      </div>
+    </footer>
+  </div>
+
+  <div class="turnOverlay" id="turnOverlay" aria-hidden="true">
+    <div class="turnCard">
+      <h3 id="turnMsg">Player 1 it’s your turn!</h3>
+      <p>Tap “Play!” to start. Then roll the dice.</p>
+      <button class="playBtn" id="btnPlay">Play!</button>
+    </div>
+  </div>
+
+  <div class="modalBackdrop" id="modalBackdrop" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal">
+      <div class="modalHeader">
+        <div>
+          <h3 id="modalTitle">Tile</h3>
+          <div class="muted" id="modalMeta"></div>
+        </div>
+        <button class="ghost" id="btnClose">✕ Close</button>
+      </div>
+      <div class="modalBody">
+        <div class="challenge" id="challengeBox"></div>
+        <div class="challenge">
+          <b>Optional: quick extension</b>
+          <div id="extensionBox" class="muted"></div>
+        </div>
+      </div>
+      <div class="modalFooter">
+        <button id="btnBadge">✅ Give current player a badge</button>
+        <button class="secondary" id="btnNewChallenge">🔁 New challenge</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const ICONS = {
+      dna: "https://commons.wikimedia.org/wiki/Special:FilePath/DNA_icon.svg",
+      microscope: "https://commons.wikimedia.org/wiki/Special:FilePath/Microscope_icon.svg",
+      atom: "https://commons.wikimedia.org/wiki/Special:FilePath/Popular_culture_atom_symbol.svg",
+      leaf: "https://commons.wikimedia.org/wiki/Special:FilePath/Leaf_Icon.png"
+    };
+
+    const VOCAB = [
+      "Atom","DNA","Biodiversity","Ecosystem","Abiotic factors","Biotic factors","Species","Genetic diversity",
+      "Habitat","Niche","Ecosystem","Food web","Energy flow","Decomposers","Producers","Consumers",
+      "Ecological balance","Symbiosis","Ecosystems: Aquatic","Ecosystems: Forest","Ecosystems: Grassland",
+      "Ecosystems: Desert","Ecosystems: Marine","Ecosystems: Freshwater","Ecosystems: Coral reef",
+      "Ecosystems: Tundra","Ecosystems: Urban","Invertebrates","Vertebrates","Arthropods","Mollusks",
+      "Fish","Amphibians","Reptiles","Birds","Mammals","Microorganisms","Microbes","Microscopic life",
+      "Microscopic organisms","Microscopic ecosystems","Microscopic diversity","Microscopic observation",
+      "Adaptation","Behavioral adaptation","Physiological adaptation","Evolution","Natural selection","Camouflage"
+    ];
+
+    const BOARD_TILES = 48;
+
+    const PLAYERS = [
+      { id: 1, name: "Player 1", color: "#e74c3c", pos: 0, badges: 0 },
+      { id: 2, name: "Player 2", color: "#3498db", pos: 0, badges: 0 },
+      { id: 3, name: "Player 3", color: "#2ecc71", pos: 0, badges: 0 },
+      { id: 4, name: "Player 4", color: "#9b59b6", pos: 0, badges: 0 }
+    ];
+
+    let current = 0;
+    let lastRoll = null;
+    let selectedTileIndex = null;
+
+    let turnActive = false;
+    let badgeAwardedThisTurn = false;
+
+    let pendingMove = null; // { playerIndex, from, to }
+
+    const boardWords = Array.from({length: BOARD_TILES}, (_, i) => VOCAB[i % VOCAB.length]);
+
+    const clamp = (n, a, b) => Math.max(a, Math.min(b, n));
+    const randInt = (a,b) => Math.floor(Math.random()*(b-a+1))+a;
+
+    function iconFor(word){
+      const w = word.toLowerCase();
+      if (w.includes("dna")) return ICONS.dna;
+      if (w.includes("micro") || w.includes("microscopic")) return ICONS.microscope;
+      if (w.includes("atom")) return ICONS.atom;
+      return ICONS.leaf;
+    }
+
+    const CHALLENGES = [
+      (word) => ({ title: "Define it", text: `In 1–2 sentences, define <b>${word}</b> in your own words.`, ext: "Give a real-life example." }),
+      (word) => ({ title: "Example vs non-example", text: `Give one example of <b>${word}</b> and one non-example. Explain why.`, ext: "If unsure, discuss and vote." }),
+      (word) => ({ title: "Draw it (quick sketch)", text: `Sketch <b>${word}</b> and label 2 parts.`, ext: "Explain your sketch in 20 seconds." }),
+      (word) => ({ title: "Use it in context", text: `Create a correct science sentence using <b>${word}</b>.`, ext: "Add one more detail to improve it." }),
+      (word) => ({ title: "Compare", text: `Compare <b>${word}</b> with another word. Similarities and differences?`, ext: "Use a Venn diagram if you want." }),
+      (word) => ({ title: "Cause & effect", text: `Describe a cause-and-effect relationship involving <b>${word}</b>.`, ext: "What happens if it changes?" })
+    ];
+
+    const ECOSYSTEM_PROMPTS = [
+      "Name two biotic and two abiotic factors there.",
+      "Describe one food chain that could exist there.",
+      "Name one adaptation an animal might need to survive there."
+    ];
+
+    function pickChallenge(word){
+      const base = CHALLENGES[randInt(0, CHALLENGES.length-1)](word);
+      if(word.toLowerCase().includes("ecosystems:")){
+        base.ext = ECOSYSTEM_PROMPTS[randInt(0, ECOSYSTEM_PROMPTS.length-1)];
+      }
+      return base;
+    }
+
+    const boardEl = document.getElementById("board");
+    const playersEl = document.getElementById("players");
+    const diceValEl = document.getElementById("diceVal");
+    const currentEl = document.getElementById("currentPlayer");
+    const turnHintEl = document.getElementById("turnHint");
+
+    const modalBackdrop = document.getElementById("modalBackdrop");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalMeta = document.getElementById("modalMeta");
+    const challengeBox = document.getElementById("challengeBox");
+    const extensionBox = document.getElementById("extensionBox");
+
+    const turnOverlay = document.getElementById("turnOverlay");
+    const turnMsg = document.getElementById("turnMsg");
+    const btnPlay = document.getElementById("btnPlay");
+
+    const btnRoll = document.getElementById("btnRoll");
+    const btnEndTurn = document.getElementById("btnEndTurn");
+    const btnReset = document.getElementById("btnReset");
+
+    const btnClose = document.getElementById("btnClose");
+    const btnBadge = document.getElementById("btnBadge");
+    const btnNewChallenge = document.getElementById("btnNewChallenge");
+
+    function updateHeader(){
+      currentEl.textContent = PLAYERS[current].id;
+
+      if (!turnActive){
+        turnHintEl.textContent = "Press “Play!” to start the turn.";
+        btnRoll.disabled = true;
+      } else {
+        btnRoll.disabled = false;
+        turnHintEl.textContent = "Roll the dice.";
+      }
+
+      diceValEl.textContent = (lastRoll === null) ? "—" : String(lastRoll);
+
+      btnBadge.disabled = badgeAwardedThisTurn;
+      btnBadge.textContent = badgeAwardedThisTurn
+        ? "✅ Badge already awarded this turn"
+        : "✅ Give current player a badge";
+    }
+
+    function renderPlayers(){
+      playersEl.innerHTML = "";
+      PLAYERS.forEach((p, idx) => {
+        const card = document.createElement("div");
+        card.className = "playerCard";
+
+        const left = document.createElement("div");
+        left.className = "playerLeft";
+
+        const token = document.createElement("div");
+        token.className = "token";
+        token.style.background = p.color;
+
+        const text = document.createElement("div");
+        const star = (idx === current) ? " ⭐" : "";
+        text.innerHTML = `
+          <div class="playerName" style="color:${p.color}">${p.name}${star}</div>
+          <div class="playerMeta">Position: ${p.pos + 1}/${BOARD_TILES}</div>
+        `;
+
+        left.appendChild(token);
+        left.appendChild(text);
+
+        const badges = document.createElement("div");
+        badges.className = "badges";
+        if(p.badges === 0){
+          const empty = document.createElement("span");
+          empty.className = "badge";
+          empty.textContent = "0 badges";
+          badges.appendChild(empty);
+        } else {
+          for(let i=0; i<p.badges; i++){
+            const b = document.createElement("span");
+            b.className = "badge";
+            b.textContent = "🏅";
+            badges.appendChild(b);
+          }
+        }
+
+        card.appendChild(left);
+        card.appendChild(badges);
+        playersEl.appendChild(card);
+      });
+    }
+
+    function tileOccupants(tileIndex){
+      return PLAYERS.filter(p => p.pos === tileIndex);
+    }
+
+    function renderBoard(){
+      boardEl.innerHTML = "";
+      boardWords.forEach((word, i) => {
+        const tile = document.createElement("div");
+        tile.className = "tile";
+        tile.dataset.index = i;
+
+        const occ = document.createElement("div");
+        occ.className = "occupants";
+        tileOccupants(i).forEach(p => {
+          const d = document.createElement("div");
+          d.className = "dot";
+          d.style.background = p.color;
+          occ.appendChild(d);
+        });
+
+        const top = document.createElement("div");
+        top.className = "tileTop";
+
+        const img = document.createElement("img");
+        img.className = "icon";
+        img.alt = "icon";
+        img.src = iconFor(word);
+        img.onerror = () => { img.remove(); };
+
+        const title = document.createElement("div");
+        title.className = "tileTitle";
+        title.textContent = word;
+
+        top.appendChild(img);
+        top.appendChild(title);
+
+        const meta = document.createElement("div");
+        meta.className = "tileMeta";
+        meta.innerHTML = `<span class="tileIndex">#${String(i+1).padStart(2,"0")}</span><span>Tap</span>`;
+
+        tile.appendChild(occ);
+        tile.appendChild(top);
+        tile.appendChild(meta);
+
+        tile.addEventListener("click", () => openTile(i));
+        tile.addEventListener("touchstart", () => {}, {passive:true});
+        boardEl.appendChild(tile);
+      });
+    }
+
+    /* ✅ UPDATED: now shows Dice result inside modal meta */
+    function openTile(i){
+      selectedTileIndex = i;
+      const word = boardWords[i];
+      const challenge = pickChallenge(word);
+      const p = PLAYERS[current];
+
+      modalTitle.textContent = word;
+
+      let diceInfo = "";
+      if (lastRoll !== null) {
+        diceInfo = ` Dice result: ${lastRoll} •`;
+      }
+
+      let moveInfo = "";
+      if (pendingMove && pendingMove.playerIndex === current){
+        moveInfo = ` Pending move: ${pendingMove.from + 1} → ${pendingMove.to + 1}`;
+      }
+
+      // Example: "Tile #12 • Current: Player 3 • Dice result: 4 • Pending move: 10 → 14"
+      modalMeta.textContent = `Tile #${i+1} • Current: Player ${p.id} •${diceInfo}${moveInfo}`;
+
+      challengeBox.innerHTML = `<b>${challenge.title}</b><div>${challenge.text}</div>`;
+      extensionBox.textContent = challenge.ext;
+
+      updateHeader();
+
+      modalBackdrop.style.display = "flex";
+      modalBackdrop.setAttribute("aria-hidden","false");
+    }
+
+    function closeModal(){
+      modalBackdrop.style.display = "none";
+      modalBackdrop.setAttribute("aria-hidden","true");
+    }
+
+    function showTurnOverlay(){
+      const p = PLAYERS[current];
+      turnMsg.textContent = `Player ${p.id} it’s your turn!`;
+      turnMsg.style.color = p.color;
+      turnOverlay.style.display = "flex";
+      turnOverlay.setAttribute("aria-hidden","false");
+    }
+
+    function hideTurnOverlay(){
+      turnOverlay.style.display = "none";
+      turnOverlay.setAttribute("aria-hidden","true");
+    }
+
+    function startTurn(){
+      badgeAwardedThisTurn = false;
+      turnActive = true;
+      lastRoll = null;
+      selectedTileIndex = null;
+      pendingMove = null;
+
+      hideTurnOverlay();
+      updateHeader();
+      renderPlayers();
+      renderBoard();
+    }
+
+    function rollDice(){
+      if(!turnActive) return;
+
+      lastRoll = randInt(1,6);
+      const p = PLAYERS[current];
+
+      const to = (p.pos + lastRoll) % BOARD_TILES;
+      pendingMove = { playerIndex: current, from: p.pos, to };
+
+      turnActive = false;
+
+      updateHeader();
+      renderPlayers();
+      renderBoard();
+
+      openTile(to);
+    }
+
+    function nextPlayer(){
+      current = (current + 1) % PLAYERS.length;
+      turnActive = false;
+      lastRoll = null;
+      selectedTileIndex = null;
+      pendingMove = null;
+      badgeAwardedThisTurn = false;
+
+      updateHeader();
+      renderPlayers();
+      renderBoard();
+      showTurnOverlay();
+    }
+
+    function closeAndAdvanceNoBadge(){
+      pendingMove = null;
+      closeModal();
+      nextPlayer();
+    }
+
+    function resetGame(){
+      closeModal();
+      PLAYERS.forEach(p => { p.pos = 0; p.badges = 0; });
+      current = 0;
+      lastRoll = null;
+      selectedTileIndex = null;
+      turnActive = false;
+      badgeAwardedThisTurn = false;
+      pendingMove = null;
+
+      updateHeader();
+      renderPlayers();
+      renderBoard();
+      showTurnOverlay();
+    }
+
+    function awardBadgeAndAdvance(){
+      if (badgeAwardedThisTurn) return;
+
+      const p = PLAYERS[current];
+
+      if (pendingMove && pendingMove.playerIndex === current){
+        p.pos = pendingMove.to;
+      }
+      pendingMove = null;
+
+      p.badges = clamp(p.badges + 1, 0, 99);
+      badgeAwardedThisTurn = true;
+
+      if(p.badges >= 5){
+        closeModal();
+        renderPlayers();
+        renderBoard();
+        alert(`${p.name} wins! 🎉\n\nClassroom rule: 5 badges = victory.`);
+        resetGame();
+        return;
+      }
+
+      renderPlayers();
+      renderBoard();
+
+      closeModal();
+      nextPlayer();
+    }
+
+    function newChallenge(){
+      if(selectedTileIndex === null) return;
+      const word = boardWords[selectedTileIndex];
+      const challenge = pickChallenge(word);
+      challengeBox.innerHTML = `<b>${challenge.title}</b><div>${challenge.text}</div>`;
+      extensionBox.textContent = challenge.ext;
+    }
+
+    btnPlay.addEventListener("click", startTurn);
+    btnRoll.addEventListener("click", rollDice);
+    btnEndTurn.addEventListener("click", nextPlayer);
+    btnReset.addEventListener("click", resetGame);
+
+    btnClose.addEventListener("click", closeAndAdvanceNoBadge);
+    btnBadge.addEventListener("click", awardBadgeAndAdvance);
+    btnNewChallenge.addEventListener("click", newChallenge);
+
+    modalBackdrop.addEventListener("click", (e) => {
+      if(e.target === modalBackdrop) closeModal();
+    });
+
+    window.addEventListener("keydown", (e) => {
+      if(e.key === "Escape") closeModal();
+    });
+
+    updateHeader();
+    renderPlayers();
+    renderBoard();
+    showTurnOverlay();
+  </script>
+</body>
+</html>
