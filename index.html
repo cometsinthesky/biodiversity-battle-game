@@ -294,16 +294,29 @@
     .board{
       flex: 1 1 auto;
       min-height: 0;
-      background: rgba(255,255,255,.65);
+
+      /* ✅ Background image (50% opacity) + overlay for readability */
+      background-image:
+        linear-gradient(rgba(255,255,255,.80), rgba(255,255,255,.80)),
+        url("images/board-bg.png");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+
+      /* ✅ Makes the image effectively ~50% visible behind the white overlay */
+      background-blend-mode: normal;
+
       border: 3px solid var(--cat-border, rgba(0,0,0,.10));
       border-radius: 16px;
       padding: 12px;
       display:grid;
       gap: var(--grid-gap);
+
       overflow: auto;
       -webkit-overflow-scrolling: touch;
       overscroll-behavior: contain;
     }
+
 
     @media (min-width: 1200px){ .board{ grid-template-columns: repeat(8, 1fr); } }
     @media (min-width: 900px) and (max-width: 1199px){ .board{ grid-template-columns: repeat(7, 1fr); } }
@@ -374,8 +387,8 @@
       z-index: 3;
     }
     .dot{
-      width: 10px; height: 10px;
-      border-radius: 4px;
+      width: 12px; height: 12px;
+      border-radius: 6px;
       box-shadow: inset 0 0 0 2px rgba(255,255,255,.85), 0 2px 8px rgba(0,0,0,.12);
     }
 
