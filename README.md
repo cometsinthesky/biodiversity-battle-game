@@ -63,7 +63,7 @@ Works well with outcomes related to:
 
 ## ✉️ Contact
 
-Created by Lucas Ferreira (MSc. Physics Education, PhD student Science Education).  
+Created by Lucas Ferreira (MSc. Physics Education, PhD student Science Education (UnB/IF/PPGEduC).  
 If you use this in your classroom, I’d love to hear how it went - feedback and suggestions are welcome!
 
 **Email:** [lucasferreiraunb@gmail.com](mailto:lucasferreiraunb@gmail.com)
