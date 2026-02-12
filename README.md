@@ -9,7 +9,7 @@ This project is ideal for teachers who want a quick, engaging way to reinforce:
 - adaptations and survival
 - scientific vocabulary and reasoning
 
-# Learning Goals
+## Learning Goals
 
 Students will be able to:
 - identify key characteristics of major groups of living things
@@ -35,7 +35,7 @@ Students will be able to:
 - **Stations**: rotate groups through the game + hands-on sorting cards  
 - **Whole-class**: projector mode, teacher mediates decisions and prompts
 
-## ✅ Classroom Rules (Simple & Clear)
+## Classroom Rules (Simple & Clear)
 
 To keep the activity productive:
 1. **Materials on the table**: each group must have **one blank sheet of paper**, **a pencil**, and an **eraser** on the desk.
@@ -55,7 +55,7 @@ Use these to deepen thinking:
 - “How might an adaptation help it survive in its habitat?”
 - “What would happen if this species disappeared from the ecosystem?”
 
-## 🧾 Assessment Ideas
+## Assessment Ideas
 
 Quick and easy options:
 - **Exit ticket**: “One new concept I learned + one question I still have.”
@@ -70,14 +70,6 @@ Works well with outcomes related to:
 - adaptation and survival
 - human impact on biodiversity
 - scientific inquiry and communication
-
-## 🚀 Run Locally (Quick Start)
-
-1. Download or clone this repository
-2. Open the project folder
-3. Open `index.html` in your browser
-
-Optional (recommended for development): use VS Code + Live Server extension.
 
 ---
 
