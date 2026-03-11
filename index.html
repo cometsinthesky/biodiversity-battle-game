@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="pt-BR">
 
 <head>
   <meta charset="utf-8" />
@@ -11,7 +11,6 @@
   <meta name="robots" content="index,follow" />
   <link rel="canonical" href="https://cometsinthesky.github.io/biodiversity-battle-game/" />
 
-  <!-- Social Preview, Open Graph for Facebook, LinkedIn, etc. -->
   <meta property="og:title" content="Biodiversity Battle Online Board Game" />
   <meta property="og:description"
     content="Free online board game for Science lessons about biodiversity, ecosystems, and biology." />
@@ -22,7 +21,6 @@
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
 
-  <!-- FAVICON -->
   <link rel="apple-touch-icon" sizes="180x180" href="./image-icons/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="./image-icons/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="./image-icons/favicon-16x16.png">
@@ -36,32 +34,21 @@
       --muted: rgba(14, 26, 43, .65);
       --shadow: 0 10px 30px rgba(0, 0, 0, .18);
       --radius: 18px;
-
       --page-pad: clamp(12px, 2.2vw, 26px);
-
       --gap: clamp(8px, 1.2vw, 14px);
       --btn-font: clamp(12px, 1.2vw, 15px);
       --btn-pad-y: clamp(10px, 1.1vw, 14px);
       --btn-pad-x: clamp(12px, 1.2vw, 16px);
-
       --title-font: clamp(14px, 1.4vw, 18px);
       --small-font: clamp(11px, 1.1vw, 13px);
-
       --tile-min-h: clamp(70px, 9vh, 96px);
       --tile-title: clamp(10px, 1.0vw, 12px);
-
       --icon-size: clamp(16px, 2.2vw, 28px);
       --grid-gap: clamp(8px, 1vw, 12px);
     }
 
-    * {
-      box-sizing: border-box;
-    }
-
-    html,
-    body {
-      height: 100%;
-    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
 
     body {
       margin: 0;
@@ -112,13 +99,10 @@
     }
 
     @media (max-width: 980px) {
-      .wrap {
-        grid-template-columns: 1fr;
-      }
+      .wrap { grid-template-columns: 1fr; }
     }
 
-    .panel,
-    .boardShell {
+    .panel, .boardShell {
       background: var(--card);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
@@ -140,25 +124,24 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 10px;
+      gap: 2px;
       padding: 10px 10px;
       border-radius: 14px;
       background: var(--card-strong);
       border: 1px solid rgba(0, 0, 0, .06);
-      flex-wrap: nowrap;      /* NÃO deixa quebrar linha */
-      gap: 2px;              /* espaço entre título e logo */
+      flex-wrap: nowrap;
     }
 
-    .brandLeft{
-      min-width: 0;           /* permite encolher sem quebrar */
-      flex: 1 1 auto;         /* título ocupa o espaço disponível */
+    .brandLeft {
+      min-width: 0;
+      flex: 1 1 auto;
     }
 
-    .brandLogo{
+    .brandLogo {
       width: 80px;
       height: 80px;
       object-fit: contain;
-      flex: 0 0 200px;        /* logo fixa e sempre à direita */
+      flex: 0 0 200px;
     }
 
     .brand h1 {
@@ -185,6 +168,61 @@
       color: rgba(14, 26, 43, .85);
       white-space: nowrap;
     }
+
+    .langSwitch {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.82);
+      border: 1px solid rgba(0,0,0,.08);
+      box-shadow: 0 8px 20px rgba(0,0,0,.08);
+      backdrop-filter: blur(6px);
+      user-select: none;
+    }
+
+    .langSwitch input { display: none; }
+
+    .langLabel {
+      font-size: 12px;
+      font-weight: 900;
+      color: rgba(14, 26, 43, .72);
+      min-width: 18px;
+      text-align: center;
+      transition: color .2s ease, opacity .2s ease;
+    }
+
+    .slider {
+      position: relative;
+      width: 58px;
+      height: 28px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, rgba(20,80,200,.92), rgba(46,204,113,.92));
+      box-shadow: inset 0 2px 8px rgba(255,255,255,.18), 0 6px 16px rgba(0,0,0,.12);
+      cursor: pointer;
+      transition: transform .15s ease, filter .2s ease;
+    }
+
+    .slider:hover { filter: brightness(1.03); }
+
+    .sliderKnob {
+      position: absolute;
+      top: 2px;
+      left: 3px;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 4px 12px rgba(0,0,0,.18);
+      transition: left .22s ease;
+    }
+
+    .langSwitch input:checked + .slider .sliderKnob { left: 31px; }
+    .langSwitch.pt-active #langPtLabel { color: rgba(14,26,43,.98); }
+    .langSwitch.pt-active #langEnLabel { color: rgba(14,26,43,.45); }
+    .langSwitch.en-active #langPtLabel { color: rgba(14,26,43,.45); }
+    .langSwitch.en-active #langEnLabel { color: rgba(14,26,43,.98); }
 
     .controls {
       display: grid;
@@ -218,13 +256,8 @@
       -webkit-tap-highlight-color: transparent;
     }
 
-    button:hover {
-      filter: brightness(1.03);
-    }
-
-    button:active {
-      transform: translateY(1px);
-    }
+    button:hover { filter: brightness(1.03); }
+    button:active { transform: translateY(1px); }
 
     button:disabled {
       opacity: .55;
@@ -237,15 +270,16 @@
       background: rgba(14, 26, 43, .86);
       box-shadow: 0 8px 18px rgba(14, 26, 43, .20);
     }
-    button.secondary:hover{ filter: brightness(1.03); }
 
+    button.secondary:hover { filter: brightness(1.03); }
 
-    button.nextturn{
+    button.nextturn {
       background: rgba(37, 182, 80, 0.9);
       color: #fff;
       box-shadow: 0 10px 22px rgba(0, 0, 0, 0.22);
     }
-    button.nextturn:hover{ filter: brightness(1.03); }
+
+    button.nextturn:hover { filter: brightness(1.03); }
 
     button.ghost {
       background: rgba(255, 255, 255, .80);
@@ -259,19 +293,14 @@
       box-shadow: 0 8px 18px rgba(231, 76, 60, .22);
     }
 
-    button.danger:hover {
-      filter: brightness(1.03);
-    }
+    button.danger:hover { filter: brightness(1.03); }
 
-    /* green play again button (kept, but not used anymore) */
     button.success {
       background: rgba(46, 204, 113, .95);
       box-shadow: 0 10px 22px rgba(46, 204, 113, .22);
     }
 
-    button.success:hover {
-      filter: brightness(1.03);
-    }
+    button.success:hover { filter: brightness(1.03); }
 
     .stat {
       background: rgba(255, 255, 255, .88);
@@ -383,6 +412,7 @@
       gap: 12px;
       padding: 8px 10px 10px;
       flex: 0 0 auto;
+      flex-wrap: wrap;
     }
 
     .boardHeader h2 {
@@ -390,14 +420,11 @@
       font-size: clamp(13px, 1.3vw, 16px);
     }
 
-    .boardHeader .muted {
-      margin: 0;
-    }
+    .boardHeader .muted { margin: 0; }
 
     .board {
       flex: 1 1 auto;
       min-height: 0;
-
       background-image:
         linear-gradient(rgba(255, 255, 255, .80), rgba(255, 255, 255, .80)),
         url("images/board-bg.png");
@@ -405,59 +432,84 @@
       background-position: center;
       background-repeat: no-repeat;
       background-blend-mode: normal;
-
       border: 3px solid var(--cat-border, rgba(0, 0, 0, .10));
       border-radius: 16px;
       padding: 12px;
       display: grid;
       gap: var(--grid-gap);
-
       overflow: auto;
       -webkit-overflow-scrolling: touch;
       overscroll-behavior: contain;
     }
 
-    @media (min-width: 1200px) {
-      .board {
-        grid-template-columns: repeat(8, 1fr);
+      #challengeBox {
+      font-size: 18px;
+      font-weight: bold;
       }
+
+      #extensionTitle {
+        font-size: 18px;
+      }
+
+      #extensionBox {
+        font-size: 18px;
+        font-weight: bold;
+      }
+
+      #challenge {
+        font-size: 18px;
+      }
+      
+      .challenge b {
+        font-size: 20px;
+        color: green;
+      }
+
+      #bonusText {
+        font-size: 16px;
+      }
+
+      #turnOverlayText {
+        font-size: 16px;
+      }
+
+      #startSubtitle {
+        font-size: 16px;
+      }
+
+    @media (min-width: 1200px) {
+      .board { grid-template-columns: repeat(8, 1fr); }
     }
 
     @media (min-width: 900px) and (max-width: 1199px) {
-      .board {
-        grid-template-columns: repeat(7, 1fr);
-      }
+      .board { grid-template-columns: repeat(7, 1fr); }
     }
 
     @media (min-width: 650px) and (max-width: 899px) {
-      .board {
-        grid-template-columns: repeat(6, 1fr);
-      }
+      .board { grid-template-columns: repeat(6, 1fr); }
     }
 
     @media (max-width: 649px) {
-      .board {
-        grid-template-columns: repeat(4, 1fr);
-      }
+      .board { grid-template-columns: repeat(4, 1fr); }
     }
 
-    @media (max-width: 520px){
-      .brand{
-        flex-direction: row;      /* mantém na mesma linha */
+    @media (max-width: 520px) {
+      .brand {
+        flex-direction: row;
         align-items: center;
         justify-content: space-between;
-        flex-wrap: nowrap;        /* não quebra */
+        flex-wrap: nowrap;
       }
 
-      .brandLeft{
+      .brandLeft {
         min-width: 0;
         flex: 1 1 auto;
       }
 
-      .brandLogo{
+      .brandLogo {
         width: 80px;
         height: 80px;
-        flex: 0 0 80px;           /* fixa a logo à direita */
+        flex: 0 0 80px;
         object-fit: contain;
       }
     }
@@ -485,15 +537,15 @@
       transform: translateY(-1px);
     }
 
-    .tile:active {
-      transform: translateY(0px);
-    }
+    .tile:active { transform: translateY(0px); }
 
     .tileTop {
       display: flex;
       align-items: flex-start;
       gap: 8px;
       min-width: 0;
+      position: relative;
+      z-index: 1;
     }
 
     .icon {
@@ -520,6 +572,8 @@
       align-items: center;
       font-size: clamp(10px, 1.0vw, 11px);
       color: var(--muted);
+      position: relative;
+      z-index: 1;
     }
 
     .tileIndex {
@@ -539,7 +593,7 @@
       align-items: center;
       width: 80%;
       pointer-events: none;
-      z-index: 3;
+      z-index: 2;
     }
 
     .dot {
@@ -554,23 +608,9 @@
       position: absolute;
       inset: 0 0 auto 0;
       height: 8px;
-      background: var(--cat-stripe, rgba(14, 26, 43, .10));
+      background: var(--cat-stripe, rgba(14,26,43,.10));
       opacity: .85;
       pointer-events: none;
-    }
-
-    .tileTop {
-      position: relative;
-      z-index: 1;
-    }
-
-    .tileMeta {
-      position: relative;
-      z-index: 1;
-    }
-
-    .occupants {
-      z-index: 2;
     }
 
     .modalBackdrop {
@@ -623,11 +663,30 @@
     }
 
     .challenge {
-      background: rgba(255, 255, 255, .95);
+      position: relative;
       border: 3px solid var(--cat-border, rgba(0, 0, 0, .10));
       border-radius: 14px;
       padding: 12px;
       font-size: clamp(12px, 1.3vw, 14px);
+      overflow: hidden;
+    }
+
+      #challengeBox {
+      background-image:
+      linear-gradient(rgba(255,255,255,.82), rgba(255,255,255,.82)),
+      url("./images/banner-challenge.jpg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+      .modalBody .challenge:nth-of-type(2) {
+      background-image:
+      linear-gradient(rgba(255,255,255,.84), rgba(255,255,255,.84)),
+      url("./images/banner-extension.jpg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
     }
 
     .challenge b {
@@ -644,9 +703,7 @@
       flex: 0 0 auto;
     }
 
-    .turnOverlay,
-    .winOverlay,
-    .startOverlay {
+    .turnOverlay, .winOverlay, .startOverlay, .bonusOverlay {
       position: fixed;
       inset: 0;
       display: none;
@@ -657,9 +714,7 @@
       background: rgba(0, 0, 0, .50);
     }
 
-    .turnCard,
-    .winCard,
-    .startCard {
+    .turnCard, .winCard, .startCard, .bonusCard {
       width: min(560px, 100%);
       background: rgba(255, 255, 255, .96);
       border-radius: 18px;
@@ -669,18 +724,14 @@
       text-align: center;
     }
 
-    .startCard h3,
-    .turnCard h3,
-    .winCard h3 {
+    .startCard h3, .turnCard h3, .winCard h3, .bonusCard h3 {
       margin: 0 0 8px;
       font-size: clamp(18px, 2.4vw, 22px);
       line-height: 1.2;
       font-weight: 1000;
     }
 
-    .startCard p,
-    .turnCard p,
-    .winCard p {
+    .startCard p, .turnCard p, .winCard p, .bonusCard p {
       margin: 0 0 14px;
       color: rgba(14, 26, 43, .70);
       font-size: var(--small-font);
@@ -692,17 +743,18 @@
       gap: 10px;
     }
 
-    .startButtons button {
+    .startButtons button,
+    .turnCard .playBtn,
+    .bonusCard button {
       width: 100%;
       font-size: clamp(14px, 1.6vw, 16px);
       padding: 14px 16px;
       border-radius: 16px;
     }
 
-    /* Start selection colors */
-    button.pick2{
+    button.pick2 {
       background: rgba(244, 180, 0, .95);
-      color: #fff; /* texto branco */
+      color: #fff;
       box-shadow: 0 10px 22px rgba(244, 180, 0, .22);
     }
 
@@ -716,14 +768,6 @@
       box-shadow: 0 10px 22px rgba(52, 152, 219, .22);
     }
 
-    .turnCard .playBtn {
-      width: 100%;
-      font-size: clamp(14px, 1.6vw, 16px);
-      padding: 14px 16px;
-      border-radius: 16px;
-    }
-
-    /* win overlay scoreboard */
     .scoreTable {
       display: grid;
       gap: 10px;
@@ -776,7 +820,6 @@
       text-align: right;
     }
 
-    /* NEW: glow per player row (everyone gets their own color glow) */
     .scoreRow.glowRow {
       border-color: var(--rowBorder, rgba(0, 0, 0, .10));
       box-shadow:
@@ -785,7 +828,6 @@
         0 16px 40px rgba(0, 0, 0, .08);
     }
 
-    /* Winner gets a stronger glow */
     .scoreRow.isWinner {
       border-color: var(--winBorder, rgba(20, 80, 200, .35));
       box-shadow:
@@ -793,49 +835,6 @@
         0 0 30px var(--winGlowSoft, rgba(20, 80, 200, .14)),
         0 18px 45px rgba(0, 0, 0, .10);
       transform: translateY(-1px);
-    }
-
-    /* NEW: bonus overlay */
-    .bonusOverlay {
-      position: fixed;
-      inset: 0;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 18px;
-      z-index: 65;
-      background: rgba(0, 0, 0, .50);
-    }
-
-    .bonusCard {
-      width: min(560px, 100%);
-      background: rgba(255, 255, 255, .96);
-      border-radius: 18px;
-      border: 1px solid rgba(0, 0, 0, .12);
-      box-shadow: 0 20px 60px rgba(0, 0, 0, .28);
-      padding: 18px;
-      text-align: center;
-    }
-
-    .bonusCard h3 {
-      margin: 0 0 8px;
-      font-size: clamp(18px, 2.4vw, 22px);
-      line-height: 1.2;
-      font-weight: 1000;
-    }
-
-    .bonusCard p {
-      margin: 0 0 14px;
-      color: rgba(14, 26, 43, .70);
-      font-size: var(--small-font);
-      line-height: 1.35;
-    }
-
-    .bonusCard button {
-      width: 100%;
-      font-size: clamp(14px, 1.6vw, 16px);
-      padding: 14px 16px;
-      border-radius: 16px;
     }
 
     footer {
@@ -861,9 +860,7 @@
       text-decoration: none;
     }
 
-    footer a:hover {
-      text-decoration: underline;
-    }
+    footer a:hover { text-decoration: underline; }
 
     footer .footerLine {
       max-width: 100%;
@@ -885,27 +882,13 @@
         overscroll-behavior: contain;
       }
 
-      .controls {
-        overflow: visible;
-      }
-
-      .players {
-        overflow: visible;
-      }
-
-      .board {
-        overflow: auto;
-      }
+      .controls, .players { overflow: visible; }
+      .board { overflow: auto; }
     }
 
     @media (max-width: 520px) {
-      .wrap {
-        grid-template-rows: minmax(240px, 52vh) minmax(0, 1fr);
-      }
-
-      .scoreBadges {
-        max-width: 56%;
-      }
+      .wrap { grid-template-rows: minmax(240px, 52vh) minmax(0, 1fr); }
+      .scoreBadges { max-width: 56%; }
     }
   </style>
 </head>
@@ -915,45 +898,45 @@
     <div class="wrap">
       <aside class="panel">
         <div class="brand">
-          <div>
+          <div class="brandLeft">
             <h1>Biodiversity Battle</h1>
-            <h1>Board Game 🧬</h1>
-            <p>Roll → Answer → Check</p>
+            <h1>Jogo de Tabuleiro 🧬</h1>
+            <p id="brandHint">Rolar → Responder → Conferir</p>
           </div>
           <img
-              class="brandLogo"
-              src="./images/biodiversity-battle-logo.png"
-              width="110"
-              height="110"
-              alt="Biodiversity Battle logo"
-              loading="eager"
-              decoding="async"
-            />
-          </div>
+            class="brandLogo"
+            src="./images/biodiversity-battle-logo.png"
+            width="110"
+            height="110"
+            alt="Biodiversity Battle logo"
+            loading="eager"
+            decoding="async"
+          />
+        </div>
 
         <div class="controls">
           <div class="row">
-            <button id="btnRoll">🎲 Roll Dice</button>
-            <button class="secondary" id="btnEndTurn">End Turn →</button>
-            <button class="ghost" id="btnReset">Reset Game</button>
+            <button id="btnRoll">🎲 Rolar dado</button>
+            <button class="secondary" id="btnEndTurn">Encerrar turno →</button>
+            <button class="ghost" id="btnReset">Reiniciar jogo</button>
           </div>
 
           <div class="row">
             <div class="stat">
-              <h2>Dice</h2>
+              <h2 id="diceTitle">Dado</h2>
               <div class="big" id="diceVal">—</div>
-              <div class="muted" id="diceHint">Roll 1–6 (movement applies only if badge is awarded)</div>
+              <div class="muted" id="diceHint">Role de 1–6 (o movimento só acontece se a badge for conquistada)</div>
             </div>
             <div class="stat">
-              <h2>Current Player</h2>
+              <h2 id="currentPlayerTitle">Jogador atual</h2>
               <div class="big" id="currentPlayer">—</div>
-              <div class="muted" id="turnHint">Select number of players to start.</div>
+              <div class="muted" id="turnHint">Selecione o número de jogadores para começar.</div>
             </div>
           </div>
 
           <div class="stat">
-            <h2>Win condition</h2>
-            <div class="muted">First player to earn <b>5 badges</b> wins. (Max: <b>1 badge per turn</b>.)</div>
+            <h2 id="winConditionTitle">Condição de vitória</h2>
+            <div class="muted" id="winConditionText">O primeiro jogador a ganhar <b>5 badges</b> vence. (Máx.: <b>1 badge por turno</b>.)</div>
           </div>
 
           <div class="players" id="players"></div>
@@ -963,10 +946,21 @@
       <main class="boardShell">
         <div class="boardHeader">
           <div>
-            <h2>Board</h2>
-            <p class="muted">Scroll inside the board if needed.</p>
+            <h2 id="boardTitle">Tabuleiro</h2>
+            <p class="muted" id="boardHint">Role dentro do tabuleiro, se necessário.</p>
           </div>
-          <div class="pill">Scroll panel and board on devices</div>
+
+          <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap; justify-content:flex-end;">
+            <div class="pill" id="scrollHint">Role no painel e no tabuleiro em dispositivos móveis</div>
+            <label class="langSwitch pt-active" id="langSwitch" aria-label="Language switch">
+              <span class="langLabel" id="langPtLabel">🇧🇷 PT</span>
+              <input type="checkbox" id="langToggle" aria-label="Toggle language" />
+              <span class="slider">
+                <span class="sliderKnob"></span>
+              </span>
+              <span class="langLabel" id="langEnLabel">EN 🇬🇧</span>
+            </label>
+          </div>
         </div>
 
         <div class="board" id="board"></div>
@@ -977,54 +971,47 @@
       <div class="footerLine">
         Created by Lucas Ferreira (MSc. Physics Education, PhD student Science Education (UnB/IF/PPGEduC)
         &nbsp;&nbsp;|&nbsp;&nbsp;
-        <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" rel="noopener noreferrer">CC BY-NC-ND
-          4.0</a>
+        <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" rel="noopener noreferrer">CC BY-NC-ND 4.0</a>
         &nbsp;&nbsp;|&nbsp;&nbsp;
-        <a href="https://github.com/cometsinthesky/biodiversity-living-things-game" target="_blank"
-          rel="noopener noreferrer">GitHub Page</a>
+        <a href="https://github.com/cometsinthesky/biodiversity-living-things-game" target="_blank" rel="noopener noreferrer">GitHub Page</a>
       </div>
     </footer>
   </div>
 
-  <!-- Start overlay -->
   <div class="startOverlay" id="startOverlay" aria-hidden="true">
     <div class="startCard">
-      <h3>Welcome to Biodiversity Battle!</h3>
-      <p>Select number of players:</p>
+      <h3 id="startTitle">Bem-vindo ao Biodiversity Battle!</h3>
+      <p id="startSubtitle">Selecione o número de jogadores:</p>
       <div class="startButtons">
-        <button class="pick2" id="btnPick2">2 players</button>
-        <button class="pick3" id="btnPick3">3 players</button>
-        <button class="pick4" id="btnPick4">4 players</button>
+        <button class="pick2" id="btnPick2">2 jogadores</button>
+        <button class="pick3" id="btnPick3">3 jogadores</button>
+        <button class="pick4" id="btnPick4">4 jogadores</button>
       </div>
     </div>
   </div>
 
   <div class="turnOverlay" id="turnOverlay" aria-hidden="true">
     <div class="turnCard">
-      <h3 id="turnMsg">Player 1 it’s your turn!</h3>
-      <p>Tap “Play!” to start. Then roll the dice.</p>
-      <button class="playBtn" id="btnPlay">Play!</button>
+      <h3 id="turnMsg">Jogador 1, é a sua vez!</h3>
+      <p id="turnOverlayText">Toque em “Jogar!” para começar. Depois, role o dado.</p>
+      <button class="playBtn" id="btnPlay">Jogar!</button>
     </div>
   </div>
 
-  <!-- Win overlay -->
   <div class="winOverlay" id="winOverlay" aria-hidden="true">
     <div class="winCard">
-      <h3 id="winTitle">Congratulations!</h3>
-      <p id="winSubtitle">You won the Biodiversity Battle!</p>
-
+      <h3 id="winTitle">Parabéns!</h3>
+      <p id="winSubtitle">Você venceu o Biodiversity Battle!</p>
       <div class="scoreTable" id="scoreTable"></div>
-
-      <button id="btnCheckBoard">Check board and positions!</button>
+      <button id="btnCheckBoard">Ver tabuleiro e posições!</button>
     </div>
   </div>
 
-  <!-- Bonus overlay -->
   <div class="bonusOverlay" id="bonusOverlay" aria-hidden="true">
     <div class="bonusCard">
-      <h3 id="bonusTitle">Bonus Move!</h3>
-      <p id="bonusText">Player X has 🏅 badges. Bonus: Player X moved +N tiles.</p>
-      <button class="nextturn" id="btnBonusNext">Next player turn!</button>
+      <h3 id="bonusTitle">Movimento bônus!</h3>
+      <p id="bonusText">Jogador X tem 🏅 badges. Bônus: Jogador X avançou +N casas.</p>
+      <button class="nextturn" id="btnBonusNext">Próximo turno!</button>
     </div>
   </div>
 
@@ -1032,27 +1019,26 @@
     <div class="modal">
       <div class="modalHeader">
         <div>
-          <h3 id="modalTitle">Tile</h3>
+          <h3 id="modalTitle">Casa</h3>
           <div class="muted" id="modalMeta"></div>
         </div>
       </div>
       <div class="modalBody">
         <div class="challenge" id="challengeBox"></div>
         <div class="challenge">
-          <b>Optional: quick extension</b>
+          <b id="extensionTitle">Opcional: extensão rápida</b>
           <div id="extensionBox" class="muted"></div>
         </div>
       </div>
       <div class="modalFooter">
-        <button class="danger" id="btnTryAgain">⏳ Try again, wait for next turn</button>
-        <button id="btnBadge">✅ Give current player a badge</button>
-        <button class="secondary" id="btnNewChallenge">🔁 New challenge</button>
+        <button class="danger" id="btnTryAgain">⏳ Tentar novamente, esperar o próximo turno</button>
+        <button id="btnBadge">✅ Dar uma badge ao jogador atual</button>
+        <button class="secondary" id="btnNewChallenge">🔁 Novo desafio</button>
       </div>
     </div>
   </div>
 
   <script>
-    // ✅ SFX (expects /sfx/*.mp3 in your project)
     const sfxDice = new Audio("sfx/dice-roll.mp3");
     sfxDice.preload = "auto";
 
@@ -1065,17 +1051,151 @@
     const sfxFail = new Audio("sfx/fail.mp3");
     sfxFail.preload = "auto";
 
-    const CATEGORY = {
-      // Start tile palette (pure white)
-      start: {
-        border: "rgba(0,0,0,.09)",
-        stripe: "rgba(0,0,0,.09)",
-        a: "#2d2d2d",
-        b: "#6b6b6b",
-        bg1: "rgba(255,255,255,1)",
-        bg2: "rgba(255,255,255,1)"
-      },
+    let LANG = "pt";
 
+    const I18N = {
+      pt: {
+        board: "Tabuleiro",
+        boardHint: "Role dentro do tabuleiro, se necessário.",
+        scrollHint: "Role no painel e no tabuleiro em dispositivos móveis",
+        brandLine: "Rolar → Responder → Conferir",
+        rollDice: "🎲 Rolar dado",
+        endTurn: "Encerrar turno →",
+        resetGame: "Reiniciar jogo",
+        dice: "Dado",
+        diceHint: "Role de 1–6 (o movimento só acontece se a badge for conquistada)",
+        currentPlayer: "Jogador atual",
+        selectPlayersToStart: "Selecione o número de jogadores para começar.",
+        winCondition: "Condição de vitória",
+        winConditionText: "O primeiro jogador a ganhar <b>5 badges</b> vence. (Máx.: <b>1 badge por turno</b>.)",
+        choosePlayers: "Escolha 2, 3 ou 4 jogadores para começar.",
+        player: "Jogador",
+        position: "Posição",
+        badges: "badges",
+        welcome: "Bem-vindo ao Biodiversity Battle!",
+        selectNumber: "Selecione o número de jogadores:",
+        players2: "2 jogadores",
+        players3: "3 jogadores",
+        players4: "4 jogadores",
+        yourTurn: (n) => `Jogador ${n}, é a sua vez!`,
+        tapPlay: "Toque em “Jogar!” para começar. Depois, role o dado.",
+        play: "Jogar!",
+        gameOver: "Fim de jogo. Pressione “Ver tabuleiro e posições!”.",
+        inspectionMode: "Veja o tabuleiro e as posições. Use “Reiniciar jogo” para recomeçar.",
+        pressPlayTurn: "Pressione “Jogar!” para iniciar o turno.",
+        rollNow: "Role o dado.",
+        bonusApplied: "Bônus aplicado. Pressione “Próximo turno!”.",
+        tile: "Casa",
+        current: "Atual",
+        diceResult: "Resultado do dado",
+        pendingMove: "Movimento pendente",
+        optionalExtension: "Opcional: extensão rápida",
+        tryAgain: "⏳ Tentar novamente, esperar o próximo turno",
+        giveBadge: "✅ Dar uma badge ao jogador atual",
+        badgeAlready: "✅ Badge já concedida neste turno",
+        newChallenge: "🔁 Novo desafio",
+        congratsWinner: (n) => `Parabéns Jogador ${n}! Você venceu o Biodiversity Battle!`,
+        checkBoard: "Ver tabuleiro e posições!",
+        bonusMove: "Movimento bônus!",
+        bonusText: (name, badges, bonusTiles) => `${name} tem ${badges}. Bônus: ${name} avançou +${bonusTiles} casas.`,
+        nextTurn: "Próximo turno!",
+        defineIt: "Defina",
+        exampleNonExample: "Exemplo e não exemplo",
+        drawIt: "Desenhe",
+        useInContext: "Use em contexto",
+        compare: "Compare",
+        causeEffect: "Causa e efeito",
+        challenge1: (word) => `Defina <b>${word}</b> com suas próprias palavras em 1–2 frases.`,
+        challenge2: (word) => `Dê um exemplo de <b>${word}</b> e um não exemplo. Explique por quê.`,
+        challenge3: (word) => `Faça um desenho rápido de <b>${word}</b> e identifique 2 partes.`,
+        challenge4: (word) => `Crie uma frase científica correta usando <b>${word}</b>.`,
+        challenge5: (word) => `Compare <b>${word}</b> com outro termo. Quais são as semelhanças e diferenças?`,
+        challenge6: (word) => `Descreva uma relação de causa e efeito envolvendo <b>${word}</b>.`,
+        ext1: "Dê um exemplo da vida real.",
+        ext2: "Se estiver em dúvida, discutam em grupo e votem.",
+        ext3: "Explique seu desenho em 20 segundos.",
+        ext4: "Adicione mais um detalhe para melhorar a frase.",
+        ext5: "Se quiser, use um diagrama de Venn.",
+        ext6: "O que acontece se isso mudar?",
+        eco1: "Nomeie dois fatores bióticos e dois abióticos desse ecossistema.",
+        eco2: "Descreva uma cadeia alimentar que poderia existir ali.",
+        eco3: "Cite uma adaptação que um animal precisaria para sobreviver ali."
+      },
+      en: {
+        board: "Board",
+        boardHint: "Scroll inside the board if needed.",
+        scrollHint: "Scroll panel and board on devices",
+        brandLine: "Roll → Answer → Check",
+        rollDice: "🎲 Roll Dice",
+        endTurn: "End Turn →",
+        resetGame: "Reset Game",
+        dice: "Dice",
+        diceHint: "Roll 1–6 (movement applies only if badge is awarded)",
+        currentPlayer: "Current Player",
+        selectPlayersToStart: "Select number of players to start.",
+        winCondition: "Win condition",
+        winConditionText: "First player to earn <b>5 badges</b> wins. (Max: <b>1 badge per turn</b>.)",
+        choosePlayers: "Choose 2, 3, or 4 players to begin.",
+        player: "Player",
+        position: "Position",
+        badges: "badges",
+        welcome: "Welcome to Biodiversity Battle!",
+        selectNumber: "Select number of players:",
+        players2: "2 players",
+        players3: "3 players",
+        players4: "4 players",
+        yourTurn: (n) => `Player ${n} it’s your turn!`,
+        tapPlay: "Tap “Play!” to start. Then roll the dice.",
+        play: "Play!",
+        gameOver: "Game over. Press “Check board and positions!”.",
+        inspectionMode: "Check board and positions. Use “Reset Game” to restart.",
+        pressPlayTurn: "Press “Play!” to start the turn.",
+        rollNow: "Roll the dice.",
+        bonusApplied: "Bonus applied. Press “Next player turn!”.",
+        tile: "Tile",
+        current: "Current",
+        diceResult: "Dice result",
+        pendingMove: "Pending move",
+        optionalExtension: "Optional: quick extension",
+        tryAgain: "⏳ Try again, wait for next turn",
+        giveBadge: "✅ Give current player a badge",
+        badgeAlready: "✅ Badge already awarded this turn",
+        newChallenge: "🔁 New challenge",
+        congratsWinner: (n) => `Congratulations Player ${n}! You won the Biodiversity Battle!`,
+        checkBoard: "Check board and positions!",
+        bonusMove: "Bonus Move!",
+        bonusText: (name, badges, bonusTiles) => `${name} has ${badges}. Bonus: ${name} moved +${bonusTiles} tiles.`,
+        nextTurn: "Next player turn!",
+        defineIt: "Define it",
+        exampleNonExample: "Example vs non-example",
+        drawIt: "Draw it",
+        useInContext: "Use it in context",
+        compare: "Compare",
+        causeEffect: "Cause & effect",
+        challenge1: (word) => `In 1–2 sentences, define <b>${word}</b> in your own words.`,
+        challenge2: (word) => `Give one example of <b>${word}</b> and one non-example. Explain why.`,
+        challenge3: (word) => `Sketch <b>${word}</b> and label 2 parts.`,
+        challenge4: (word) => `Create a correct science sentence using <b>${word}</b>.`,
+        challenge5: (word) => `Compare <b>${word}</b> with another word. Similarities and differences?`,
+        challenge6: (word) => `Describe a cause-and-effect relationship involving <b>${word}</b>.`,
+        ext1: "Give a real-life example.",
+        ext2: "If unsure, discuss and vote.",
+        ext3: "Explain your sketch in 20 seconds.",
+        ext4: "Add one more detail to improve it.",
+        ext5: "Use a Venn diagram if you want.",
+        ext6: "What happens if it changes?",
+        eco1: "Name two biotic and two abiotic factors there.",
+        eco2: "Describe one food chain that could exist there.",
+        eco3: "Name one adaptation an animal might need to survive there."
+      }
+    };
+
+    function t(key) {
+      return I18N[LANG][key];
+    }
+
+    const CATEGORY = {
+      start: { border: "rgba(0,0,0,.09)", stripe: "rgba(0,0,0,.09)", a: "#2d2d2d", b: "#6b6b6b", bg1: "rgba(255,255,255,1)", bg2: "rgba(255,255,255,1)" },
       ecosystems: { border: "#0b84a5", stripe: "#34a853", a: "#0b84a5", b: "#2ecc71", bg1: "rgba(11,132,165,.13)", bg2: "rgba(46,204,113,.10)" },
       eco_aquatic: { border: "#1e63ff", stripe: "#0b3d91", a: "#1e63ff", b: "#5aa7ff", bg1: "rgba(30,99,255,.13)", bg2: "rgba(90,167,255,.10)" },
       eco_forest: { border: "#1b5e20", stripe: "#0f3d14", a: "#1b5e20", b: "#43a047", bg1: "rgba(27,94,32,.13)", bg2: "rgba(67,160,71,.10)" },
@@ -1095,349 +1215,51 @@
     };
 
     const SVG = {
-      startflag: (p) => `
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-          <path d="M18 10v44" fill="none" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linecap="round"/>
-          <path d="M18 12h26l-6 8 6 8H18z"
-                fill="rgba(255,255,255,.85)" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linejoin="round"/>
-          <g stroke="rgba(14,26,43,.70)" stroke-width="2" stroke-linecap="round">
-            <path d="M22 16h6M22 20h6M22 24h6"/>
-            <path d="M32 16h6M32 20h6M32 24h6"/>
-          </g>
-          <path d="M26 50h24" fill="none" stroke="${p.b}" stroke-width="3" stroke-linecap="round"/>
-          <path d="M44 50l6-4-6-4" fill="none" stroke="${p.a}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>`,
-      atom: (p) => `
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-          <g fill="none" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-            <ellipse cx="32" cy="32" rx="22" ry="10" transform="rotate(20 32 32)"/>
-            <ellipse cx="32" cy="32" rx="22" ry="10" transform="rotate(-20 32 32)"/>
-            <ellipse cx="32" cy="32" rx="22" ry="10" transform="rotate(90 32 32)"/>
-          </g>
-          <circle cx="32" cy="32" r="6" fill="${p.a}" stroke="rgba(14,26,43,.86)" stroke-width="3"/>
-          <circle cx="46" cy="22" r="3" fill="${p.b}"/>
-        </svg>`,
-      dna: (p) => `
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-          <path d="M20 10c10 8 14 14 14 22s-4 14-14 22" fill="none" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linecap="round"/>
-          <path d="M44 10c-10 8-14 14-14 22s4 14 14 22" fill="none" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linecap="round"/>
-          <g stroke="rgba(14,26,43,.72)" stroke-width="3" stroke-linecap="round">
-            <line x1="24" y1="18" x2="40" y2="18"/>
-            <line x1="22" y1="26" x2="42" y2="26"/>
-            <line x1="22" y1="34" x2="42" y2="34"/>
-            <line x1="24" y1="42" x2="40" y2="42"/>
-            <line x1="26" y1="50" x2="38" y2="50"/>
-          </g>
-          <circle cx="20" cy="10" r="3" fill="${p.a}"/>
-          <circle cx="44" cy="54" r="3" fill="${p.b}"/>
-        </svg>`,
-      leaf: (p) => `
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-          <path d="M50 12C34 14 18 26 14 42c-2 9 6 14 14 10 16-8 26-24 22-40z" fill="rgba(46,204,113,.20)" stroke="rgba(14,26,43,.82)" stroke-width="3" stroke-linejoin="round"/>
-          <path d="M20 46c10-12 18-18 28-24" fill="none" stroke="${p.a}" stroke-width="3" stroke-linecap="round"/>
-        </svg>`,
-      globe: (p) => `
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-          <circle cx="32" cy="32" r="22" fill="rgba(11,132,165,.18)" stroke="rgba(14,26,43,.86)" stroke-width="3"/>
-          <path d="M10 32h44" stroke="rgba(14,26,43,.60)" stroke-width="3" stroke-linecap="round"/>
-          <path d="M32 10c8 8 8 36 0 44M32 10c-8 8-8 36 0 44" stroke="rgba(14,26,43,.60)" stroke-width="3" stroke-linecap="round" fill="none"/>
-          <path d="M18 20c8 4 20 4 28 0M18 44c8-4 20-4 28 0" stroke="${p.a}" stroke-width="3" stroke-linecap="round" fill="none"/>
-        </svg>`,
-      sunrock: (p) => `
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-          <g stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linecap="round">
-            <circle cx="20" cy="20" r="8" fill="rgba(243,156,18,.20)"/>
-            <line x1="20" y1="6" x2="20" y2="10"/><line x1="20" y1="30" x2="20" y2="34"/>
-            <line x1="6" y1="20" x2="10" y2="20"/><line x1="30" y1="20" x2="34" y2="20"/>
-            <line x1="10" y1="10" x2="13" y2="13"/><line x1="27" y1="27" x2="30" y2="30"/>
-            <line x1="10" y1="30" x2="13" y2="27"/><line x1="27" y1="13" x2="30" y2="10"/>
-          </g>
-          <path d="M26 50l8-14h18l6 14H26z" fill="rgba(14,26,43,.10)" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linejoin="round"/>
-          <path d="M34 36l10 14" stroke="${p.a}" stroke-width="3" stroke-linecap="round"/>
-        </svg>`,
-      pawleaf: (p) => `
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-          <g fill="rgba(243,156,18,.20)" stroke="rgba(14,26,43,.86)" stroke-width="3">
-            <circle cx="20" cy="24" r="5"/><circle cx="30" cy="18" r="5"/><circle cx="40" cy="24" r="5"/><circle cx="28" cy="44" r="10"/>
-          </g>
-          <path d="M46 46c6-8 8-16 6-26-10 2-18 8-22 16" fill="rgba(46,204,113,.16)" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linejoin="round"/>
-          <path d="M34 40c4-4 8-8 14-12" fill="none" stroke="${p.a}" stroke-width="3" stroke-linecap="round"/>
-        </svg>`,
-      house: (p) => `
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-          <path d="M14 30l18-16 18 16" fill="rgba(11,132,165,.14)" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linejoin="round"/>
-          <path d="M20 28v24h24V28" fill="rgba(255,255,255,.40)" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linejoin="round"/>
-          <path d="M30 52V38h8v14" fill="rgba(52,168,83,.12)" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linejoin="round"/>
-          <circle cx="46" cy="38" r="3" fill="${p.a}"/>
-        </svg>`,
-      puzzle: (p) => `
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-          <path d="M18 22h10c-2-6 8-8 10-2 2 6-4 8-6 8v6h6c0-2 2-6 8-6s8 6 6 10-8 6-10 2H34v10H18V22z"
-            fill="rgba(155,89,182,.12)" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linejoin="round"/>
-          <path d="M22 44h10" stroke="${p.a}" stroke-width="3" stroke-linecap="round"/>
-        </svg>`,
-      network: (p) => `
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-          <g stroke="rgba(14,26,43,.78)" stroke-width="3" stroke-linecap="round" fill="none">
-            <line x1="20" y1="20" x2="44" y2="20"/><line x1="20" y1="20" x2="32" y2="44"/><line x1="44" y1="20" x2="32" y2="44"/>
-            <line x1="20" y1="20" x2="18" y2="46"/><line x1="44" y1="20" x2="46" y2="46"/>
-            <line x1="18" y1="46" x2="32" y2="44"/><line x1="46" y1="46" x2="32" y2="44"/>
-          </g>
-          <g fill="${p.a}" stroke="rgba(14,26,43,.86)" stroke-width="3">
-            <circle cx="20" cy="20" r="5"/><circle cx="44" cy="20" r="5"/><circle cx="32" cy="44" r="5"/>
-            <circle cx="18" cy="46" r="4"/><circle cx="46" cy="46" r="4"/>
-          </g>
-        </svg>`,
-      arrows: (p) => `
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-          <path d="M18 44c0-16 10-26 26-26" fill="none" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linecap="round"/>
-          <path d="M40 14l6 4-4 6" fill="none" stroke="${p.a}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M46 20c0 16-10 26-26 26" fill="none" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linecap="round"/>
-          <path d="M24 50l-6-4 4-6" fill="none" stroke="${p.b}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>`,
-      mushroom: (p) => `
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-          <path d="M16 30c2-12 12-18 16-18s14 6 16 18H16z" fill="rgba(142,68,173,.16)" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linejoin="round"/>
-          <path d="M26 30v16c0 6 12 6 12 0V30" fill="rgba(255,255,255,.40)" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linejoin="round"/>
-          <circle cx="26" cy="24" r="3" fill="${p.a}"/>
-          <circle cx="38" cy="22" r="2.5" fill="${p.b}"/>
-        </svg>`,
-      plant: (p) => `
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-          <path d="M32 54V26" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linecap="round"/>
-          <path d="M32 34c-10 0-16-6-18-14 10-2 18 4 18 14z" fill="rgba(46,204,113,.20)" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linejoin="round"/>
-          <path d="M32 38c10 0 16-6 18-14-10-2-18 4-18 14z" fill="rgba(52,168,83,.16)" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linejoin="round"/>
-          <circle cx="32" cy="24" r="4" fill="${p.a}" stroke="rgba(14,26,43,.86)" stroke-width="3"/>
-        </svg>`,
-      mouth: (p) => `
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-          <path d="M16 34c6 10 26 10 32 0" fill="rgba(243,156,18,.14)" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linecap="round"/>
-          <path d="M20 32c8 6 16 6 24 0" fill="none" stroke="${p.a}" stroke-width="3" stroke-linecap="round"/>
-          <circle cx="24" cy="28" r="2.5" fill="rgba(14,26,43,.75)"/>
-          <circle cx="40" cy="28" r="2.5" fill="rgba(14,26,43,.75)"/>
-        </svg>`,
-      scales: (p) => `
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-          <path d="M32 14v36" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linecap="round"/>
-          <path d="M18 22h28" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linecap="round"/>
-          <path d="M18 22l-8 14h16l-8-14z" fill="rgba(11,132,165,.14)" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linejoin="round"/>
-          <path d="M46 22l-8 14h16l-8-14z" fill="rgba(52,168,83,.12)" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linejoin="round"/>
-          <path d="M22 52h20" stroke="${p.a}" stroke-width="3" stroke-linecap="round"/>
-        </svg>`,
-      link: (p) => `
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-          <path d="M24 34l-6 6a10 10 0 0 0 14 14l6-6" fill="none" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linecap="round"/>
-          <path d="M40 30l6-6a10 10 0 0 0-14-14l-6 6" fill="none" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linecap="round"/>
-          <path d="M26 38l12-12" stroke="${p.a}" stroke-width="3" stroke-linecap="round"/>
-        </svg>`,
-      waves: (p) => `
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-          <path d="M10 40c6 6 12 6 18 0s12-6 18 0 12 6 18 0" fill="none" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linecap="round"/>
-          <path d="M10 50c6 6 12 6 18 0s12-6 18 0 12 6 18 0" fill="none" stroke="${p.a}" stroke-width="3" stroke-linecap="round"/>
-          <circle cx="18" cy="26" r="5" fill="rgba(11,132,165,.18)" stroke="rgba(14,26,43,.86)" stroke-width="3"/>
-        </svg>`,
-      tree: (p) => `
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-          <path d="M32 10c-10 6-16 16-16 24 0 8 6 12 16 12s16-4 16-12c0-8-6-18-16-24z" fill="rgba(52,168,83,.18)" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linejoin="round"/>
-          <path d="M28 46v10h8V46" fill="rgba(14,26,43,.10)" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linejoin="round"/>
-          <path d="M24 30c4 2 12 2 16 0" fill="none" stroke="${p.a}" stroke-width="3" stroke-linecap="round"/>
-        </svg>`,
-      grass: (p) => `
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-          <g fill="none" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linecap="round">
-            <path d="M18 52c4-10 4-18 0-30"/><path d="M26 52c6-12 8-22 6-34"/>
-            <path d="M34 52c2-12 0-22-6-34"/><path d="M42 52c4-10 10-18 18-26"/>
-          </g>
-          <path d="M14 52h36" stroke="${p.a}" stroke-width="3" stroke-linecap="round"/>
-        </svg>`,
-      cactus: (p) => `
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-          <path d="M30 54V28c0-6-6-10-12-8v10c0 4-6 4-6 0V16c0-8 18-10 18 6v4" fill="none" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M34 54V24c0-10 18-8 18 2v12c0 4-6 4-6 0V28c-6-2-12 2-12 8v18" fill="none" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-          <circle cx="22" cy="26" r="3" fill="${p.a}"/>
-          <circle cx="44" cy="32" r="3" fill="${p.b}"/>
-        </svg>`,
-      city: (p) => `
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-          <path d="M14 54V28l12-6v32H14zM26 54V18l12-6v42H26zM38 54V30l12-6v30H38z"
-            fill="rgba(14,26,43,.10)" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linejoin="round"/>
-          <g fill="${p.a}">
-            <rect x="18" y="34" width="4" height="4"/><rect x="18" y="42" width="4" height="4"/>
-            <rect x="30" y="26" width="4" height="4"/><rect x="30" y="34" width="4" height="4"/><rect x="30" y="42" width="4" height="4"/>
-            <rect x="42" y="36" width="4" height="4"/><rect x="42" y="44" width="4" height="4"/>
-          </g>
-        </svg>`,
-      bug: (p) => `
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-          <ellipse cx="32" cy="36" rx="12" ry="14" fill="rgba(243,156,18,.16)" stroke="rgba(14,26,43,.86)" stroke-width="3"/>
-          <circle cx="32" cy="20" r="8" fill="rgba(243,156,18,.16)" stroke="rgba(14,26,43,.86)" stroke-width="3"/>
-          <path d="M20 32l-8-6M44 32l8-6M20 42l-10 0M44 42l10 0M24 50l-8 6M40 50l8 6" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linecap="round"/>
-          <path d="M28 18l-8-8M36 18l8-8" stroke="${p.a}" stroke-width="3" stroke-linecap="round"/>
-        </svg>`,
-      spider: (p) => `
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-          <g fill="rgba(243,156,18,.16)" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="32" cy="34" r="10"/>
-            <circle cx="32" cy="22" r="6"/>
-          </g>
-          <g stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linecap="round">
-            <path d="M22 30l-10-6"/><path d="M22 34l-12 0"/><path d="M22 38l-10 6"/>
-            <path d="M42 30l10-6"/><path d="M42 34l12 0"/><path d="M42 38l10 6"/>
-          </g>
-          <g fill="${p.a}">
-            <circle cx="29" cy="21" r="1.6"/><circle cx="35" cy="21" r="1.6"/>
-          </g>
-          <path d="M28 26c4 3 8 3 12 0" fill="none" stroke="${p.a}" stroke-width="3" stroke-linecap="round"/>
-        </svg>`,
-      spine: (p) => `
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-          <path d="M32 10v44" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linecap="round"/>
-          <g fill="rgba(243,156,18,.12)" stroke="rgba(14,26,43,.86)" stroke-width="3">
-            <rect x="26" y="14" width="12" height="6" rx="3"/><rect x="26" y="24" width="12" height="6" rx="3"/>
-            <rect x="26" y="34" width="12" height="6" rx="3"/><rect x="26" y="44" width="12" height="6" rx="3"/>
-          </g>
-          <circle cx="32" cy="54" r="4" fill="${p.a}" stroke="rgba(14,26,43,.86)" stroke-width="3"/>
-        </svg>`,
-      shell: (p) => `
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-          <path d="M18 46c0-18 12-30 26-30 10 0 18 8 18 18 0 10-8 18-18 18H18z"
-            fill="rgba(243,156,18,.14)" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linejoin="round"/>
-          <path d="M26 46c0-12 8-22 18-22" fill="none" stroke="${p.a}" stroke-width="3" stroke-linecap="round"/>
-          <path d="M34 46c0-8 4-14 10-14" fill="none" stroke="${p.b}" stroke-width="3" stroke-linecap="round"/>
-        </svg>`,
-      fish: (p) => `
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-          <path d="M20 32c8-10 22-10 30 0-8 10-22 10-30 0z" fill="rgba(11,132,165,.18)" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linejoin="round"/>
-          <path d="M20 32l-10-8v16l10-8z" fill="rgba(11,132,165,.18)" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linejoin="round"/>
-          <circle cx="40" cy="30" r="3" fill="rgba(14,26,43,.75)"/>
-          <path d="M32 34c4 2 8 2 12 0" fill="none" stroke="${p.a}" stroke-width="3" stroke-linecap="round"/>
-        </svg>`,
-      frog: (p) => `
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-          <path d="M18 40c2-10 10-16 14-16s12 6 14 16c2 10-4 16-14 16s-16-6-14-16z"
-            fill="rgba(46,204,113,.18)" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linejoin="round"/>
-          <circle cx="26" cy="28" r="4" fill="rgba(255,255,255,.8)" stroke="rgba(14,26,43,.86)" stroke-width="3"/>
-          <circle cx="38" cy="28" r="4" fill="rgba(255,255,255,.8)" stroke="rgba(14,26,43,.86)" stroke-width="3"/>
-          <circle cx="26" cy="28" r="1.8" fill="rgba(14,26,43,.8)"/>
-          <circle cx="38" cy="28" r="1.8" fill="rgba(14,26,43,.8)"/>
-          <path d="M26 44c4 3 8 3 12 0" fill="none" stroke="${p.a}" stroke-width="3" stroke-linecap="round"/>
-        </svg>`,
-      lizard: (p) => `
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-          <path d="M18 40c6-10 24-14 30-4 4 6 0 14-8 14H30c-6 0-10-4-12-10z"
-            fill="rgba(52,168,83,.14)" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linejoin="round"/>
-          <path d="M46 28l8-6" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linecap="round"/>
-          <path d="M22 46l-6 8M28 50l-2 10M36 50l2 10M42 46l6 8" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linecap="round"/>
-          <circle cx="40" cy="34" r="2.5" fill="rgba(14,26,43,.8)"/>
-          <path d="M28 42c6 2 10 2 14 0" fill="none" stroke="${p.a}" stroke-width="3" stroke-linecap="round"/>
-        </svg>`,
-      bird: (p) => `
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-          <path d="M16 36c10-14 22-14 32 0-10 4-18 8-22 16-6-6-8-10-10-16z"
-            fill="rgba(52,168,83,.12)" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linejoin="round"/>
-          <path d="M48 36l10 2-8 6" fill="none" stroke="${p.a}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-          <circle cx="38" cy="34" r="2.5" fill="rgba(14,26,43,.8)"/>
-        </svg>`,
-      mammal: (p) => `
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-          <path d="M18 40c0-10 8-18 14-18h0c6 0 14 8 14 18 0 10-6 16-14 16s-14-6-14-16z"
-            fill="rgba(243,156,18,.12)" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linejoin="round"/>
-          <path d="M24 24l-6-6M40 24l6-6" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linecap="round"/>
-          <circle cx="26" cy="38" r="2.5" fill="rgba(14,26,43,.8)"/>
-          <circle cx="38" cy="38" r="2.5" fill="rgba(14,26,43,.8)"/>
-          <path d="M28 46c2 2 6 2 8 0" fill="none" stroke="${p.a}" stroke-width="3" stroke-linecap="round"/>
-        </svg>`,
-      cell: (p) => `
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-          <path d="M12 34c0-14 10-24 24-24s16 8 16 18-6 26-22 26S12 48 12 34z"
-            fill="rgba(155,89,182,.14)" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linejoin="round"/>
-          <circle cx="34" cy="34" r="8" fill="rgba(255,255,255,.5)" stroke="rgba(14,26,43,.72)" stroke-width="3"/>
-          <circle cx="36" cy="32" r="3" fill="${p.a}"/>
-          <path d="M20 28c2 2 4 2 6 0M18 38c2 2 4 2 6 0M44 46c2 2 4 2 6 0" stroke="${p.b}" stroke-width="3" stroke-linecap="round"/>
-        </svg>`,
-      microscope: (p) => `
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-          <path d="M26 14l10-4 6 14-10 4-6-14z" fill="rgba(155,89,182,.12)" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linejoin="round"/>
-          <path d="M30 26l-6 4c-6 4-8 10-6 18h28" fill="none" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linecap="round"/>
-          <path d="M40 48c0 4-4 6-8 6s-8-2-8-6h16z" fill="rgba(14,26,43,.10)" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linejoin="round"/>
-          <circle cx="46" cy="22" r="4" fill="${p.a}" stroke="rgba(14,26,43,.86)" stroke-width="3"/>
-        </svg>`,
-      petri: (p) => `
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-          <circle cx="32" cy="34" r="18" fill="rgba(155,89,182,.10)" stroke="rgba(14,26,43,.86)" stroke-width="3"/>
-          <path d="M18 30c6 6 22 6 28 0" fill="none" stroke="${p.a}" stroke-width="3" stroke-linecap="round"/>
-          <circle cx="26" cy="38" r="3" fill="${p.b}"/>
-          <circle cx="38" cy="40" r="2.5" fill="${p.a}"/>
-          <circle cx="34" cy="28" r="2.5" fill="${p.b}"/>
-        </svg>`,
-      chameleon: (p) => `
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-          <path d="M18 40c2-12 18-22 28-12 8 8 4 22-8 22H30c-6 0-12-4-12-10z"
-            fill="rgba(52,168,83,.14)" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linejoin="round"/>
-          <path d="M44 44c8 0 10 10 2 10" fill="none" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linecap="round"/>
-          <circle cx="38" cy="34" r="3" fill="rgba(255,255,255,.8)" stroke="rgba(14,26,43,.86)" stroke-width="3"/>
-          <circle cx="38" cy="34" r="1.5" fill="rgba(14,26,43,.85)"/>
-          <path d="M28 42c6 2 10 2 14 0" fill="none" stroke="${p.a}" stroke-width="3" stroke-linecap="round"/>
-          <circle cx="30" cy="30" r="2.5" fill="${p.b}"/>
-        </svg>`,
-      footprint: (p) => `
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-          <path d="M28 52c-8 0-10-10-6-18 2-4 6-6 10-6s8 2 10 6c4 8 2 18-6 18H28z"
-            fill="rgba(243,156,18,.14)" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linejoin="round"/>
-          <g fill="${p.a}">
-            <circle cx="22" cy="26" r="3"/><circle cx="28" cy="22" r="3"/><circle cx="34" cy="22" r="3"/><circle cx="40" cy="26" r="3"/>
-          </g>
-        </svg>`,
-      thermo: (p) => `
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-          <path d="M32 12v28" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linecap="round"/>
-          <path d="M32 40a10 10 0 1 0 10 10c0-4-2-7-4-9V16a6 6 0 0 0-12 0v25c-2 2-4 5-4 9a10 10 0 0 0 10-10z"
-            fill="rgba(231,76,60,.12)" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linejoin="round"/>
-          <circle cx="32" cy="50" r="5" fill="${p.a}"/>
-        </svg>`,
-      spiral: (p) => `
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-          <path d="M34 50c-14 0-20-16-10-26 8-8 22-2 22 10 0 10-12 14-18 8-4-4 0-10 6-10 6 0 8 8 0 12"
-            fill="none" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linecap="round"/>
-          <circle cx="34" cy="40" r="3" fill="${p.a}"/>
-          <circle cx="40" cy="30" r="2.5" fill="${p.b}"/>
-        </svg>`,
-      tag: (p) => `
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-          <path d="M20 18h22l10 14-10 14H20L10 32l10-14z"
-            fill="rgba(22,160,133,.12)" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linejoin="round"/>
-          <circle cx="24" cy="32" r="4" fill="rgba(255,255,255,.65)" stroke="rgba(14,26,43,.72)" stroke-width="3"/>
-          <path d="M32 32h14" stroke="${p.a}" stroke-width="3" stroke-linecap="round"/>
-        </svg>`,
-      coral: (p) => `
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-          <path d="M32 54V30" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linecap="round"/>
-          <path d="M32 40c-6 0-10-6-10-12 8 0 10 4 10 12z" fill="rgba(231,76,60,.12)" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linejoin="round"/>
-          <path d="M32 38c6 0 10-6 10-12-8 0-10 4-10 12z" fill="rgba(11,132,165,.12)" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linejoin="round"/>
-          <path d="M24 52c0-8-6-12-12-12 0 10 4 14 12 14" fill="none" stroke="${p.a}" stroke-width="3" stroke-linecap="round"/>
-          <path d="M40 52c0-8 6-12 12-12 0 10-4 14-12 14" fill="none" stroke="${p.b}" stroke-width="3" stroke-linecap="round"/>
-        </svg>`,
-      snow: (p) => `
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-          <g stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linecap="round">
-            <path d="M32 12v40"/><path d="M14 22l36 20"/><path d="M50 22L14 42"/>
-            <path d="M32 12l-6 6M32 12l6 6"/><path d="M32 52l-6-6M32 52l6-6"/>
-            <path d="M14 22l8 0M50 22l-8 0"/><path d="M14 42l8 0M50 42l-8 0"/>
-          </g>
-          <circle cx="32" cy="32" r="5" fill="${p.a}" stroke="rgba(14,26,43,.86)" stroke-width="3"/>
-        </svg>`,
-      target: (p) => `
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-          <circle cx="32" cy="32" r="20" fill="rgba(231,76,60,.10)" stroke="rgba(14,26,43,.86)" stroke-width="3"/>
-          <circle cx="32" cy="32" r="12" fill="none" stroke="rgba(14,26,43,.60)" stroke-width="3"/>
-          <circle cx="32" cy="32" r="5" fill="${p.a}" stroke="rgba(14,26,43,.86)" stroke-width="3"/>
-          <path d="M46 18l10-4-4 10" fill="none" stroke="${p.b}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M44 20l10-10" fill="none" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linecap="round"/>
-        </svg>`
+      startflag: (p) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M18 10v44" fill="none" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linecap="round"/><path d="M18 12h26l-6 8 6 8H18z" fill="rgba(255,255,255,.85)" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linejoin="round"/><g stroke="rgba(14,26,43,.70)" stroke-width="2" stroke-linecap="round"><path d="M22 16h6M22 20h6M22 24h6"/><path d="M32 16h6M32 20h6M32 24h6"/></g><path d="M26 50h24" fill="none" stroke="${p.b}" stroke-width="3" stroke-linecap="round"/><path d="M44 50l6-4-6-4" fill="none" stroke="${p.a}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+      atom: (p) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><g fill="none" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="32" cy="32" rx="22" ry="10" transform="rotate(20 32 32)"/><ellipse cx="32" cy="32" rx="22" ry="10" transform="rotate(-20 32 32)"/><ellipse cx="32" cy="32" rx="22" ry="10" transform="rotate(90 32 32)"/></g><circle cx="32" cy="32" r="6" fill="${p.a}" stroke="rgba(14,26,43,.86)" stroke-width="3"/><circle cx="46" cy="22" r="3" fill="${p.b}"/></svg>`,
+      dna: (p) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M20 10c10 8 14 14 14 22s-4 14-14 22" fill="none" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linecap="round"/><path d="M44 10c-10 8-14 14-14 22s4 14 14 22" fill="none" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linecap="round"/><g stroke="rgba(14,26,43,.72)" stroke-width="3" stroke-linecap="round"><line x1="24" y1="18" x2="40" y2="18"/><line x1="22" y1="26" x2="42" y2="26"/><line x1="22" y1="34" x2="42" y2="34"/><line x1="24" y1="42" x2="40" y2="42"/><line x1="26" y1="50" x2="38" y2="50"/></g><circle cx="20" cy="10" r="3" fill="${p.a}"/><circle cx="44" cy="54" r="3" fill="${p.b}"/></svg>`,
+      leaf: (p) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M50 12C34 14 18 26 14 42c-2 9 6 14 14 10 16-8 26-24 22-40z" fill="rgba(46,204,113,.20)" stroke="rgba(14,26,43,.82)" stroke-width="3" stroke-linejoin="round"/><path d="M20 46c10-12 18-18 28-24" fill="none" stroke="${p.a}" stroke-width="3" stroke-linecap="round"/></svg>`,
+      globe: (p) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><circle cx="32" cy="32" r="22" fill="rgba(11,132,165,.18)" stroke="rgba(14,26,43,.86)" stroke-width="3"/><path d="M10 32h44" stroke="rgba(14,26,43,.60)" stroke-width="3" stroke-linecap="round"/><path d="M32 10c8 8 8 36 0 44M32 10c-8 8-8 36 0 44" stroke="rgba(14,26,43,.60)" stroke-width="3" stroke-linecap="round" fill="none"/><path d="M18 20c8 4 20 4 28 0M18 44c8-4 20-4 28 0" stroke="${p.a}" stroke-width="3" stroke-linecap="round" fill="none"/></svg>`,
+      sunrock: (p) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><g stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linecap="round"><circle cx="20" cy="20" r="8" fill="rgba(243,156,18,.20)"/><line x1="20" y1="6" x2="20" y2="10"/><line x1="20" y1="30" x2="20" y2="34"/><line x1="6" y1="20" x2="10" y2="20"/><line x1="30" y1="20" x2="34" y2="20"/><line x1="10" y1="10" x2="13" y2="13"/><line x1="27" y1="27" x2="30" y2="30"/><line x1="10" y1="30" x2="13" y2="27"/><line x1="27" y1="13" x2="30" y2="10"/></g><path d="M26 50l8-14h18l6 14H26z" fill="rgba(14,26,43,.10)" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linejoin="round"/><path d="M34 36l10 14" stroke="${p.a}" stroke-width="3" stroke-linecap="round"/></svg>`,
+      pawleaf: (p) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><g fill="rgba(243,156,18,.20)" stroke="rgba(14,26,43,.86)" stroke-width="3"><circle cx="20" cy="24" r="5"/><circle cx="30" cy="18" r="5"/><circle cx="40" cy="24" r="5"/><circle cx="28" cy="44" r="10"/></g><path d="M46 46c6-8 8-16 6-26-10 2-18 8-22 16" fill="rgba(46,204,113,.16)" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linejoin="round"/><path d="M34 40c4-4 8-8 14-12" fill="none" stroke="${p.a}" stroke-width="3" stroke-linecap="round"/></svg>`,
+      house: (p) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M14 30l18-16 18 16" fill="rgba(11,132,165,.14)" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linejoin="round"/><path d="M20 28v24h24V28" fill="rgba(255,255,255,.40)" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linejoin="round"/><path d="M30 52V38h8v14" fill="rgba(52,168,83,.12)" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linejoin="round"/><circle cx="46" cy="38" r="3" fill="${p.a}"/></svg>`,
+      puzzle: (p) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M18 22h10c-2-6 8-8 10-2 2 6-4 8-6 8v6h6c0-2 2-6 8-6s8 6 6 10-8 6-10 2H34v10H18V22z" fill="rgba(155,89,182,.12)" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linejoin="round"/><path d="M22 44h10" stroke="${p.a}" stroke-width="3" stroke-linecap="round"/></svg>`,
+      network: (p) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><g stroke="rgba(14,26,43,.78)" stroke-width="3" stroke-linecap="round" fill="none"><line x1="20" y1="20" x2="44" y2="20"/><line x1="20" y1="20" x2="32" y2="44"/><line x1="44" y1="20" x2="32" y2="44"/><line x1="20" y1="20" x2="18" y2="46"/><line x1="44" y1="20" x2="46" y2="46"/><line x1="18" y1="46" x2="32" y2="44"/><line x1="46" y1="46" x2="32" y2="44"/></g><g fill="${p.a}" stroke="rgba(14,26,43,.86)" stroke-width="3"><circle cx="20" cy="20" r="5"/><circle cx="44" cy="20" r="5"/><circle cx="32" cy="44" r="5"/><circle cx="18" cy="46" r="4"/><circle cx="46" cy="46" r="4"/></g></svg>`,
+      arrows: (p) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M18 44c0-16 10-26 26-26" fill="none" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linecap="round"/><path d="M40 14l6 4-4 6" fill="none" stroke="${p.a}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M46 20c0 16-10 26-26 26" fill="none" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linecap="round"/><path d="M24 50l-6-4 4-6" fill="none" stroke="${p.b}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+      mushroom: (p) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M16 30c2-12 12-18 16-18s14 6 16 18H16z" fill="rgba(142,68,173,.16)" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linejoin="round"/><path d="M26 30v16c0 6 12 6 12 0V30" fill="rgba(255,255,255,.40)" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linejoin="round"/><circle cx="26" cy="24" r="3" fill="${p.a}"/><circle cx="38" cy="22" r="2.5" fill="${p.b}"/></svg>`,
+      plant: (p) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M32 54V26" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linecap="round"/><path d="M32 34c-10 0-16-6-18-14 10-2 18 4 18 14z" fill="rgba(46,204,113,.20)" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linejoin="round"/><path d="M32 38c10 0 16-6 18-14-10-2-18 4-18 14z" fill="rgba(52,168,83,.16)" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linejoin="round"/><circle cx="32" cy="24" r="4" fill="${p.a}" stroke="rgba(14,26,43,.86)" stroke-width="3"/></svg>`,
+      mouth: (p) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M16 34c6 10 26 10 32 0" fill="rgba(243,156,18,.14)" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linecap="round"/><path d="M20 32c8 6 16 6 24 0" fill="none" stroke="${p.a}" stroke-width="3" stroke-linecap="round"/><circle cx="24" cy="28" r="2.5" fill="rgba(14,26,43,.75)"/><circle cx="40" cy="28" r="2.5" fill="rgba(14,26,43,.75)"/></svg>`,
+      scales: (p) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M32 14v36" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linecap="round"/><path d="M18 22h28" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linecap="round"/><path d="M18 22l-8 14h16l-8-14z" fill="rgba(11,132,165,.14)" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linejoin="round"/><path d="M46 22l-8 14h16l-8-14z" fill="rgba(52,168,83,.12)" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linejoin="round"/><path d="M22 52h20" stroke="${p.a}" stroke-width="3" stroke-linecap="round"/></svg>`,
+      link: (p) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M24 34l-6 6a10 10 0 0 0 14 14l6-6" fill="none" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linecap="round"/><path d="M40 30l6-6a10 10 0 0 0-14-14l-6 6" fill="none" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linecap="round"/><path d="M26 38l12-12" stroke="${p.a}" stroke-width="3" stroke-linecap="round"/></svg>`,
+      waves: (p) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M10 40c6 6 12 6 18 0s12-6 18 0 12 6 18 0" fill="none" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linecap="round"/><path d="M10 50c6 6 12 6 18 0s12-6 18 0 12 6 18 0" fill="none" stroke="${p.a}" stroke-width="3" stroke-linecap="round"/><circle cx="18" cy="26" r="5" fill="rgba(11,132,165,.18)" stroke="rgba(14,26,43,.86)" stroke-width="3"/></svg>`,
+      tree: (p) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M32 10c-10 6-16 16-16 24 0 8 6 12 16 12s16-4 16-12c0-8-6-18-16-24z" fill="rgba(52,168,83,.18)" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linejoin="round"/><path d="M28 46v10h8V46" fill="rgba(14,26,43,.10)" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linejoin="round"/><path d="M24 30c4 2 12 2 16 0" fill="none" stroke="${p.a}" stroke-width="3" stroke-linecap="round"/></svg>`,
+      grass: (p) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><g fill="none" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linecap="round"><path d="M18 52c4-10 4-18 0-30"/><path d="M26 52c6-12 8-22 6-34"/><path d="M34 52c2-12 0-22-6-34"/><path d="M42 52c4-10 10-18 18-26"/></g><path d="M14 52h36" stroke="${p.a}" stroke-width="3" stroke-linecap="round"/></svg>`,
+      cactus: (p) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M30 54V28c0-6-6-10-12-8v10c0 4-6 4-6 0V16c0-8 18-10 18 6v4" fill="none" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M34 54V24c0-10 18-8 18 2v12c0 4-6 4-6 0V28c-6-2-12 2-12 8v18" fill="none" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="22" cy="26" r="3" fill="${p.a}"/><circle cx="44" cy="32" r="3" fill="${p.b}"/></svg>`,
+      city: (p) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M14 54V28l12-6v32H14zM26 54V18l12-6v42H26zM38 54V30l12-6v30H38z" fill="rgba(14,26,43,.10)" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linejoin="round"/><g fill="${p.a}"><rect x="18" y="34" width="4" height="4"/><rect x="18" y="42" width="4" height="4"/><rect x="30" y="26" width="4" height="4"/><rect x="30" y="34" width="4" height="4"/><rect x="30" y="42" width="4" height="4"/><rect x="42" y="36" width="4" height="4"/><rect x="42" y="44" width="4" height="4"/></g></svg>`,
+      bug: (p) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><ellipse cx="32" cy="36" rx="12" ry="14" fill="rgba(243,156,18,.16)" stroke="rgba(14,26,43,.86)" stroke-width="3"/><circle cx="32" cy="20" r="8" fill="rgba(243,156,18,.16)" stroke="rgba(14,26,43,.86)" stroke-width="3"/><path d="M20 32l-8-6M44 32l8-6M20 42l-10 0M44 42l10 0M24 50l-8 6M40 50l8 6" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linecap="round"/><path d="M28 18l-8-8M36 18l8-8" stroke="${p.a}" stroke-width="3" stroke-linecap="round"/></svg>`,
+      spider: (p) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><g fill="rgba(243,156,18,.16)" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="32" cy="34" r="10"/><circle cx="32" cy="22" r="6"/></g><g stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linecap="round"><path d="M22 30l-10-6"/><path d="M22 34l-12 0"/><path d="M22 38l-10 6"/><path d="M42 30l10-6"/><path d="M42 34l12 0"/><path d="M42 38l10 6"/></g><g fill="${p.a}"><circle cx="29" cy="21" r="1.6"/><circle cx="35" cy="21" r="1.6"/></g><path d="M28 26c4 3 8 3 12 0" fill="none" stroke="${p.a}" stroke-width="3" stroke-linecap="round"/></svg>`,
+      spine: (p) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M32 10v44" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linecap="round"/><g fill="rgba(243,156,18,.12)" stroke="rgba(14,26,43,.86)" stroke-width="3"><rect x="26" y="14" width="12" height="6" rx="3"/><rect x="26" y="24" width="12" height="6" rx="3"/><rect x="26" y="34" width="12" height="6" rx="3"/><rect x="26" y="44" width="12" height="6" rx="3"/></g><circle cx="32" cy="54" r="4" fill="${p.a}" stroke="rgba(14,26,43,.86)" stroke-width="3"/></svg>`,
+      shell: (p) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M18 46c0-18 12-30 26-30 10 0 18 8 18 18 0 10-8 18-18 18H18z" fill="rgba(243,156,18,.14)" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linejoin="round"/><path d="M26 46c0-12 8-22 18-22" fill="none" stroke="${p.a}" stroke-width="3" stroke-linecap="round"/><path d="M34 46c0-8 4-14 10-14" fill="none" stroke="${p.b}" stroke-width="3" stroke-linecap="round"/></svg>`,
+      fish: (p) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M20 32c8-10 22-10 30 0-8 10-22 10-30 0z" fill="rgba(11,132,165,.18)" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linejoin="round"/><path d="M20 32l-10-8v16l10-8z" fill="rgba(11,132,165,.18)" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linejoin="round"/><circle cx="40" cy="30" r="3" fill="rgba(14,26,43,.75)"/><path d="M32 34c4 2 8 2 12 0" fill="none" stroke="${p.a}" stroke-width="3" stroke-linecap="round"/></svg>`,
+      frog: (p) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M18 40c2-10 10-16 14-16s12 6 14 16c2 10-4 16-14 16s-16-6-14-16z" fill="rgba(46,204,113,.18)" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linejoin="round"/><circle cx="26" cy="28" r="4" fill="rgba(255,255,255,.8)" stroke="rgba(14,26,43,.86)" stroke-width="3"/><circle cx="38" cy="28" r="4" fill="rgba(255,255,255,.8)" stroke="rgba(14,26,43,.86)" stroke-width="3"/><circle cx="26" cy="28" r="1.8" fill="rgba(14,26,43,.8)"/><circle cx="38" cy="28" r="1.8" fill="rgba(14,26,43,.8)"/><path d="M26 44c4 3 8 3 12 0" fill="none" stroke="${p.a}" stroke-width="3" stroke-linecap="round"/></svg>`,
+      lizard: (p) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M18 40c6-10 24-14 30-4 4 6 0 14-8 14H30c-6 0-10-4-12-10z" fill="rgba(52,168,83,.14)" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linejoin="round"/><path d="M46 28l8-6" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linecap="round"/><path d="M22 46l-6 8M28 50l-2 10M36 50l2 10M42 46l6 8" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linecap="round"/><circle cx="40" cy="34" r="2.5" fill="rgba(14,26,43,.8)"/><path d="M28 42c6 2 10 2 14 0" fill="none" stroke="${p.a}" stroke-width="3" stroke-linecap="round"/></svg>`,
+      bird: (p) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M16 36c10-14 22-14 32 0-10 4-18 8-22 16-6-6-8-10-10-16z" fill="rgba(52,168,83,.12)" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linejoin="round"/><path d="M48 36l10 2-8 6" fill="none" stroke="${p.a}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="38" cy="34" r="2.5" fill="rgba(14,26,43,.8)"/></svg>`,
+      mammal: (p) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M18 40c0-10 8-18 14-18h0c6 0 14 8 14 18 0 10-6 16-14 16s-14-6-14-16z" fill="rgba(243,156,18,.12)" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linejoin="round"/><path d="M24 24l-6-6M40 24l6-6" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linecap="round"/><circle cx="26" cy="38" r="2.5" fill="rgba(14,26,43,.8)"/><circle cx="38" cy="38" r="2.5" fill="rgba(14,26,43,.8)"/><path d="M28 46c2 2 6 2 8 0" fill="none" stroke="${p.a}" stroke-width="3" stroke-linecap="round"/></svg>`,
+      cell: (p) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M12 34c0-14 10-24 24-24s16 8 16 18-6 26-22 26S12 48 12 34z" fill="rgba(155,89,182,.14)" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linejoin="round"/><circle cx="34" cy="34" r="8" fill="rgba(255,255,255,.5)" stroke="rgba(14,26,43,.72)" stroke-width="3"/><circle cx="36" cy="32" r="3" fill="${p.a}"/><path d="M20 28c2 2 4 2 6 0M18 38c2 2 4 2 6 0M44 46c2 2 4 2 6 0" stroke="${p.b}" stroke-width="3" stroke-linecap="round"/></svg>`,
+      microscope: (p) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M26 14l10-4 6 14-10 4-6-14z" fill="rgba(155,89,182,.12)" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linejoin="round"/><path d="M30 26l-6 4c-6 4-8 10-6 18h28" fill="none" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linecap="round"/><path d="M40 48c0 4-4 6-8 6s-8-2-8-6h16z" fill="rgba(14,26,43,.10)" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linejoin="round"/><circle cx="46" cy="22" r="4" fill="${p.a}" stroke="rgba(14,26,43,.86)" stroke-width="3"/></svg>`,
+      petri: (p) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><circle cx="32" cy="34" r="18" fill="rgba(155,89,182,.10)" stroke="rgba(14,26,43,.86)" stroke-width="3"/><path d="M18 30c6 6 22 6 28 0" fill="none" stroke="${p.a}" stroke-width="3" stroke-linecap="round"/><circle cx="26" cy="38" r="3" fill="${p.b}"/><circle cx="38" cy="40" r="2.5" fill="${p.a}"/><circle cx="34" cy="28" r="2.5" fill="${p.b}"/></svg>`,
+      chameleon: (p) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M18 40c2-12 18-22 28-12 8 8 4 22-8 22H30c-6 0-12-4-12-10z" fill="rgba(52,168,83,.14)" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linejoin="round"/><path d="M44 44c8 0 10 10 2 10" fill="none" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linecap="round"/><circle cx="38" cy="34" r="3" fill="rgba(255,255,255,.8)" stroke="rgba(14,26,43,.86)" stroke-width="3"/><circle cx="38" cy="34" r="1.5" fill="rgba(14,26,43,.85)"/><path d="M28 42c6 2 10 2 14 0" fill="none" stroke="${p.a}" stroke-width="3" stroke-linecap="round"/><circle cx="30" cy="30" r="2.5" fill="${p.b}"/></svg>`,
+      footprint: (p) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M28 52c-8 0-10-10-6-18 2-4 6-6 10-6s8 2 10 6c4 8 2 18-6 18H28z" fill="rgba(243,156,18,.14)" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linejoin="round"/><g fill="${p.a}"><circle cx="22" cy="26" r="3"/><circle cx="28" cy="22" r="3"/><circle cx="34" cy="22" r="3"/><circle cx="40" cy="26" r="3"/></g></svg>`,
+      thermo: (p) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M32 12v28" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linecap="round"/><path d="M32 40a10 10 0 1 0 10 10c0-4-2-7-4-9V16a6 6 0 0 0-12 0v25c-2 2-4 5-4 9a10 10 0 0 0 10-10z" fill="rgba(231,76,60,.12)" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linejoin="round"/><circle cx="32" cy="50" r="5" fill="${p.a}"/></svg>`,
+      spiral: (p) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M34 50c-14 0-20-16-10-26 8-8 22-2 22 10 0 10-12 14-18 8-4-4 0-10 6-10 6 0 8 8 0 12" fill="none" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linecap="round"/><circle cx="34" cy="40" r="3" fill="${p.a}"/><circle cx="40" cy="30" r="2.5" fill="${p.b}"/></svg>`,
+      tag: (p) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M20 18h22l10 14-10 14H20L10 32l10-14z" fill="rgba(22,160,133,.12)" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linejoin="round"/><circle cx="24" cy="32" r="4" fill="rgba(255,255,255,.65)" stroke="rgba(14,26,43,.72)" stroke-width="3"/><path d="M32 32h14" stroke="${p.a}" stroke-width="3" stroke-linecap="round"/></svg>`,
+      coral: (p) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M32 54V30" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linecap="round"/><path d="M32 40c-6 0-10-6-10-12 8 0 10 4 10 12z" fill="rgba(231,76,60,.12)" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linejoin="round"/><path d="M32 38c6 0 10-6 10-12-8 0-10 4-10 12z" fill="rgba(11,132,165,.12)" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linejoin="round"/><path d="M24 52c0-8-6-12-12-12 0 10 4 14 12 14" fill="none" stroke="${p.a}" stroke-width="3" stroke-linecap="round"/><path d="M40 52c0-8 6-12 12-12 0 10-4 14-12 14" fill="none" stroke="${p.b}" stroke-width="3" stroke-linecap="round"/></svg>`,
+      snow: (p) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><g stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linecap="round"><path d="M32 12v40"/><path d="M14 22l36 20"/><path d="M50 22L14 42"/><path d="M32 12l-6 6M32 12l6 6"/><path d="M32 52l-6-6M32 52l6-6"/><path d="M14 22l8 0M50 22l-8 0"/><path d="M14 42l8 0M50 42l-8 0"/></g><circle cx="32" cy="32" r="5" fill="${p.a}" stroke="rgba(14,26,43,.86)" stroke-width="3"/></svg>`,
+      target: (p) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><circle cx="32" cy="32" r="20" fill="rgba(231,76,60,.10)" stroke="rgba(14,26,43,.86)" stroke-width="3"/><circle cx="32" cy="32" r="12" fill="none" stroke="rgba(14,26,43,.60)" stroke-width="3"/><circle cx="32" cy="32" r="5" fill="${p.a}" stroke="rgba(14,26,43,.86)" stroke-width="3"/><path d="M46 18l10-4-4 10" fill="none" stroke="${p.b}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M44 20l10-10" fill="none" stroke="rgba(14,26,43,.86)" stroke-width="3" stroke-linecap="round"/></svg>`
     };
 
     const ICON_KEY = {
-      "start!": "startflag",
+      "start": "startflag",
       "atom": "atom",
       "dna": "dna",
       "biodiversity": "globe",
@@ -1491,10 +1313,10 @@
       return String(word || "").trim().toLowerCase();
     }
 
-    function categoryFor(word) {
-      const lower = String(word ?? "").trim().toLowerCase();
+    function categoryFor(wordKey) {
+      const lower = String(wordKey ?? "").trim().toLowerCase();
 
-      if (normalizeWord(word) === "start!") return "start";
+      if (lower === "start") return "start";
 
       if (lower.startsWith("ecosystems:")) {
         const sub = lower.split(":").slice(1).join(":").trim();
@@ -1504,38 +1326,35 @@
         if (sub.includes("desert")) return "eco_desert";
         if (sub.includes("marine")) return "eco_marine";
         if (sub.includes("freshwater")) return "eco_freshwater";
-        if (sub.includes("coral reef") || sub.includes("coralreef")) return "eco_coralreef";
+        if (sub.includes("coral reef")) return "eco_coralreef";
         if (sub.includes("tundra")) return "eco_tundra";
         if (sub.includes("urban")) return "eco_urban";
         return "ecosystems";
       }
 
-      const w = normalizeWord(word);
-
       const animals = new Set([
         "invertebrates", "vertebrates", "arthropods", "mollusks", "arachnids",
         "fish", "amphibians", "reptiles", "birds", "mammals"
       ]);
-      if (animals.has(w)) return "animals";
+      if (animals.has(lower)) return "animals";
 
-      if (w.includes("micro") || w.includes("microscopic")) return "micro";
-      if (w.includes("dna") || w.includes("genetic") || w.includes("atom")) return "genetics";
-      if (w.includes("evolution") || w.includes("natural selection") || w.includes("camouflage") || w.includes("adaptation")) return "evolution";
+      if (lower.includes("micro")) return "micro";
+      if (lower.includes("dna") || lower.includes("genetic") || lower.includes("atom")) return "genetics";
+      if (lower.includes("evolution") || lower.includes("natural selection") || lower.includes("camouflage") || lower.includes("adaptation")) return "evolution";
 
       const eco = new Set([
         "biodiversity", "ecosystem", "abiotic factors", "biotic factors", "species",
         "habitat", "niche", "food web", "energy flow", "decomposers", "producers", "consumers",
         "ecological balance", "symbiosis"
       ]);
-      if (eco.has(w)) return "ecology";
+      if (eco.has(lower)) return "ecology";
 
       return "general";
     }
 
-    function iconKeyFor(word) {
-      const w = normalizeWord(word);
+    function iconKeyFor(wordKey) {
+      const w = normalizeWord(wordKey);
       if (ICON_KEY[w]) return ICON_KEY[w];
-
       if (w.includes("dna")) return "dna";
       if (w.includes("atom")) return "atom";
       if (w.includes("food")) return "network";
@@ -1555,109 +1374,140 @@
       return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svgString.trim());
     }
 
-    function iconFor(word) {
-      const cat = categoryFor(word);
+    function iconFor(wordKey) {
+      const cat = categoryFor(wordKey);
       const pal = CATEGORY[cat] || CATEGORY.general;
-      const key = iconKeyFor(word);
+      const key = iconKeyFor(wordKey);
       const maker = SVG[key] || SVG.leaf;
       return svgDataUri(maker(pal));
     }
 
-    const VOCAB = [
-      "Start!",
-      "Atom", "DNA", "Biodiversity", "Ecosystem", "Abiotic factors", "Biotic factors", "Species", "Genetic diversity",
-      "Habitat", "Niche", "Ecosystem", "Food web", "Energy flow", "Decomposers", "Producers", "Consumers",
-      "Ecological balance", "Symbiosis", "Ecosystems: Aquatic", "Ecosystems: Forest", "Ecosystems: Grassland",
-      "Ecosystems: Desert", "Ecosystems: Marine", "Ecosystems: Freshwater", "Ecosystems: Coral reef",
-      "Ecosystems: Tundra", "Ecosystems: Urban", "Invertebrates", "Vertebrates", "Arthropods", "Mollusks",
-      "Arachnids", "Fish", "Amphibians", "Reptiles", "Birds", "Mammals",
-      "Microorganism",
-      "Microscopic life", "Microscopic organisms", "Microscopic ecosystems", "Microscopic observation",
-      "Adaptation", "Behavioral adaptation", "Physiological adaptation", "Evolution", "Natural selection"
+    const TILE_DATA = [
+      { key: "start", en: "Start!", pt: "Início!" },
+      { key: "atom", en: "Atom", pt: "Átomo" },
+      { key: "dna", en: "DNA", pt: "DNA" },
+      { key: "biodiversity", en: "Biodiversity", pt: "Biodiversidade" },
+      { key: "ecosystem", en: "Ecosystem", pt: "Ecossistema" },
+      { key: "abiotic factors", en: "Abiotic factors", pt: "Fatores abióticos" },
+      { key: "biotic factors", en: "Biotic factors", pt: "Fatores bióticos" },
+      { key: "species", en: "Species", pt: "Espécie" },
+      { key: "genetic diversity", en: "Genetic diversity", pt: "Diversidade genética" },
+      { key: "habitat", en: "Habitat", pt: "Habitat" },
+      { key: "niche", en: "Niche", pt: "Nicho" },
+      { key: "ecosystem", en: "Ecosystem", pt: "Ecossistema" },
+      { key: "food web", en: "Food web", pt: "Teia alimentar" },
+      { key: "energy flow", en: "Energy flow", pt: "Fluxo de energia" },
+      { key: "decomposers", en: "Decomposers", pt: "Decompositores" },
+      { key: "producers", en: "Producers", pt: "Produtores" },
+      { key: "consumers", en: "Consumers", pt: "Consumidores" },
+      { key: "ecological balance", en: "Ecological balance", pt: "Equilíbrio ecológico" },
+      { key: "symbiosis", en: "Symbiosis", pt: "Simbiose" },
+      { key: "ecosystems: aquatic", en: "Ecosystems: Aquatic", pt: "Ecossistemas: Aquático" },
+      { key: "ecosystems: forest", en: "Ecosystems: Forest", pt: "Ecossistemas: Floresta" },
+      { key: "ecosystems: grassland", en: "Ecosystems: Grassland", pt: "Ecossistemas: Campo" },
+      { key: "ecosystems: desert", en: "Ecosystems: Desert", pt: "Ecossistemas: Deserto" },
+      { key: "ecosystems: marine", en: "Ecosystems: Marine", pt: "Ecossistemas: Marinho" },
+      { key: "ecosystems: freshwater", en: "Ecosystems: Freshwater", pt: "Ecossistemas: Água doce" },
+      { key: "ecosystems: coral reef", en: "Ecosystems: Coral reef", pt: "Ecossistemas: Recife de coral" },
+      { key: "ecosystems: tundra", en: "Ecosystems: Tundra", pt: "Ecossistemas: Tundra" },
+      { key: "ecosystems: urban", en: "Ecosystems: Urban", pt: "Ecossistemas: Urbano" },
+      { key: "invertebrates", en: "Invertebrates", pt: "Invertebrados" },
+      { key: "vertebrates", en: "Vertebrates", pt: "Vertebrados" },
+      { key: "arthropods", en: "Arthropods", pt: "Artrópodes" },
+      { key: "mollusks", en: "Mollusks", pt: "Moluscos" },
+      { key: "arachnids", en: "Arachnids", pt: "Aracnídeos" },
+      { key: "fish", en: "Fish", pt: "Peixes" },
+      { key: "amphibians", en: "Amphibians", pt: "Anfíbios" },
+      { key: "reptiles", en: "Reptiles", pt: "Répteis" },
+      { key: "birds", en: "Birds", pt: "Aves" },
+      { key: "mammals", en: "Mammals", pt: "Mamíferos" },
+      { key: "microorganism", en: "Microorganism", pt: "Microrganismo" },
+      { key: "microscopic life", en: "Microscopic life", pt: "Vida microscópica" },
+      { key: "microscopic organisms", en: "Microscopic organisms", pt: "Organismos microscópicos" },
+      { key: "microscopic ecosystems", en: "Microscopic ecosystems", pt: "Ecossistemas microscópicos" },
+      { key: "microscopic observation", en: "Microscopic observation", pt: "Observação microscópica" },
+      { key: "adaptation", en: "Adaptation", pt: "Adaptação" },
+      { key: "behavioral adaptation", en: "Behavioral adaptation", pt: "Adaptação comportamental" },
+      { key: "physiological adaptation", en: "Physiological adaptation", pt: "Adaptação fisiológica" },
+      { key: "evolution", en: "Evolution", pt: "Evolução" },
+      { key: "natural selection", en: "Natural selection", pt: "Seleção natural" }
     ];
 
     const BOARD_TILES = 48;
+    const boardTilesData = Array.from({ length: BOARD_TILES }, (_, i) => TILE_DATA[i % TILE_DATA.length]);
 
-    // Player templates + dynamic player list (2/3/4)
+    function tileLabel(tile) {
+      return LANG === "pt" ? tile.pt : tile.en;
+    }
+
     const PLAYER_TEMPLATES = [
-      { color: "#e74c3c" }, // Player 1
-      { color: "#3498db" }, // Player 2
-      { color: "#2ecc71" }, // Player 3
-      { color: "#9b59b6" }  // Player 4
+      { color: "#e74c3c" },
+      { color: "#3498db" },
+      { color: "#2ecc71" },
+      { color: "#9b59b6" }
     ];
 
-    let PLAYERS = []; // built after selecting 2/3/4
+    let PLAYERS = [];
     let hasChosenPlayers = false;
 
     function buildPlayers(n) {
       const count = Math.max(2, Math.min(4, Number(n) || 2));
       PLAYERS = PLAYER_TEMPLATES.slice(0, count).map((t, i) => ({
         id: i + 1,
-        name: `Player ${i + 1}`,
+        name: `${tLang("player")} ${i + 1}`,
         color: t.color,
         pos: 0,
         badges: 0
       }));
     }
 
+    function tLang(key) {
+      return I18N[LANG][key];
+    }
+
     let current = 0;
     let lastRoll = null;
     let selectedTileIndex = null;
-
     let turnActive = false;
     let badgeAwardedThisTurn = false;
-
-    let pendingMove = null; // { playerIndex, from, to }
-
-    // game over guard
+    let pendingMove = null;
     let gameOver = false;
-
-    // bonus overlay state (freeze until user clicks Next)
     let waitingBonusAck = false;
-
-    // NEW: after win -> allow only "Reset Game"
     let boardCheckMode = false;
-
-    const boardWords = Array.from({ length: BOARD_TILES }, (_, i) => VOCAB[i % VOCAB.length]);
 
     const clamp = (n, a, b) => Math.max(a, Math.min(b, n));
     const randInt = (a, b) => Math.floor(Math.random() * (b - a + 1)) + a;
 
-    // convert hex (#RGB / #RRGGBB) to rgba()
     function hexToRgba(hex, alpha = 1) {
       const h = String(hex || "").trim();
       if (h.startsWith("rgba(") || h.startsWith("rgb(")) return h;
-
       let s = h.replace("#", "");
       if (s.length === 3) s = s.split("").map(ch => ch + ch).join("");
       if (s.length !== 6) return `rgba(20,80,200,${alpha})`;
-
       const r = parseInt(s.slice(0, 2), 16);
       const g = parseInt(s.slice(2, 4), 16);
       const b = parseInt(s.slice(4, 6), 16);
       return `rgba(${r},${g},${b},${alpha})`;
     }
 
-    const CHALLENGES = [
-      (word) => ({ title: "Define it", text: `In 1–2 sentences, define <b>${word}</b> in your own words.`, ext: "Give a real-life example." }),
-      (word) => ({ title: "Example vs non-example", text: `Give one example of <b>${word}</b> and one non-example. Explain why.`, ext: "If unsure, discuss and vote." }),
-      (word) => ({ title: "Draw it (quick sketch)", text: `Sketch <b>${word}</b> and label 2 parts.`, ext: "Explain your sketch in 20 seconds." }),
-      (word) => ({ title: "Use it in context", text: `Create a correct science sentence using <b>${word}</b>.`, ext: "Add one more detail to improve it." }),
-      (word) => ({ title: "Compare", text: `Compare <b>${word}</b> with another word. Similarities and differences?`, ext: "Use a Venn diagram if you want." }),
-      (word) => ({ title: "Cause & effect", text: `Describe a cause-and-effect relationship involving <b>${word}</b>.`, ext: "What happens if it changes?" })
-    ];
+    function pickChallenge(tileData) {
+      const word = tileLabel(tileData);
+      const list = [
+        { title: t("defineIt"), text: t("challenge1")(word), ext: t("ext1") },
+        { title: t("exampleNonExample"), text: t("challenge2")(word), ext: t("ext2") },
+        { title: t("drawIt"), text: t("challenge3")(word), ext: t("ext3") },
+        { title: t("useInContext"), text: t("challenge4")(word), ext: t("ext4") },
+        { title: t("compare"), text: t("challenge5")(word), ext: t("ext5") },
+        { title: t("causeEffect"), text: t("challenge6")(word), ext: t("ext6") }
+      ];
 
-    const ECOSYSTEM_PROMPTS = [
-      "Name two biotic and two abiotic factors there.",
-      "Describe one food chain that could exist there.",
-      "Name one adaptation an animal might need to survive there."
-    ];
+      const base = list[randInt(0, list.length - 1)];
 
-    function pickChallenge(word) {
-      const base = CHALLENGES[randInt(0, CHALLENGES.length - 1)](word);
-      if (word.toLowerCase().includes("ecosystems:")) {
-        base.ext = ECOSYSTEM_PROMPTS[randInt(0, ECOSYSTEM_PROMPTS.length - 1)];
+      if (tileData.key.toLowerCase().includes("ecosystems:")) {
+        const ecoPrompts = [t("eco1"), t("eco2"), t("eco3")];
+        base.ext = ecoPrompts[randInt(0, ecoPrompts.length - 1)];
       }
+
       return base;
     }
 
@@ -1666,53 +1516,55 @@
     const diceValEl = document.getElementById("diceVal");
     const currentEl = document.getElementById("currentPlayer");
     const turnHintEl = document.getElementById("turnHint");
-
     const modalBackdrop = document.getElementById("modalBackdrop");
     const modalTitle = document.getElementById("modalTitle");
     const modalMeta = document.getElementById("modalMeta");
     const challengeBox = document.getElementById("challengeBox");
     const extensionBox = document.getElementById("extensionBox");
-
-    // start overlay elements
     const startOverlay = document.getElementById("startOverlay");
     const btnPick2 = document.getElementById("btnPick2");
     const btnPick3 = document.getElementById("btnPick3");
     const btnPick4 = document.getElementById("btnPick4");
-
     const turnOverlay = document.getElementById("turnOverlay");
     const turnMsg = document.getElementById("turnMsg");
     const btnPlay = document.getElementById("btnPlay");
-
-    // win overlay elements
     const winOverlay = document.getElementById("winOverlay");
     const winTitle = document.getElementById("winTitle");
     const winSubtitle = document.getElementById("winSubtitle");
     const scoreTable = document.getElementById("scoreTable");
     const btnCheckBoard = document.getElementById("btnCheckBoard");
-
-    // bonus overlay elements
     const bonusOverlay = document.getElementById("bonusOverlay");
     const bonusTitle = document.getElementById("bonusTitle");
     const bonusText = document.getElementById("bonusText");
     const btnBonusNext = document.getElementById("btnBonusNext");
-
     const btnRoll = document.getElementById("btnRoll");
     const btnEndTurn = document.getElementById("btnEndTurn");
     const btnReset = document.getElementById("btnReset");
-
     const btnTryAgain = document.getElementById("btnTryAgain");
     const btnBadge = document.getElementById("btnBadge");
     const btnNewChallenge = document.getElementById("btnNewChallenge");
+    const langToggle = document.getElementById("langToggle");
+    const langSwitch = document.getElementById("langSwitch");
+
+    function updateLangUI() {
+      if (LANG === "pt") {
+        langSwitch.classList.add("pt-active");
+        langSwitch.classList.remove("en-active");
+        langToggle.checked = false;
+      } else {
+        langSwitch.classList.add("en-active");
+        langSwitch.classList.remove("pt-active");
+        langToggle.checked = true;
+      }
+    }
 
     function showStartOverlay() {
       hideWinOverlay();
       hideBonusOverlay();
       closeModal();
       hideTurnOverlay();
-
       startOverlay.style.display = "flex";
       startOverlay.setAttribute("aria-hidden", "false");
-
       updateHeader();
       renderPlayers();
       renderBoard();
@@ -1726,7 +1578,6 @@
     function beginWithPlayers(n) {
       buildPlayers(n);
       hasChosenPlayers = true;
-
       current = 0;
       lastRoll = null;
       selectedTileIndex = null;
@@ -1736,7 +1587,6 @@
       gameOver = false;
       waitingBonusAck = false;
       boardCheckMode = false;
-
       hideStartOverlay();
       updateHeader();
       renderPlayers();
@@ -1745,16 +1595,42 @@
     }
 
     function updateHeader() {
+      updateLangUI();
+
+      document.getElementById("boardTitle").textContent = t("board");
+      document.getElementById("boardHint").textContent = t("boardHint");
+      document.getElementById("scrollHint").textContent = t("scrollHint");
+      document.getElementById("brandHint").textContent = t("brandLine");
+      btnRoll.textContent = t("rollDice");
+      btnEndTurn.textContent = t("endTurn");
+      btnReset.textContent = t("resetGame");
+      document.getElementById("diceTitle").textContent = t("dice");
+      document.getElementById("diceHint").textContent = t("diceHint");
+      document.getElementById("currentPlayerTitle").textContent = t("currentPlayer");
+      document.getElementById("winConditionTitle").textContent = t("winCondition");
+      document.getElementById("winConditionText").innerHTML = t("winConditionText");
+      document.getElementById("startTitle").textContent = t("welcome");
+      document.getElementById("startSubtitle").textContent = t("selectNumber");
+      btnPick2.textContent = t("players2");
+      btnPick3.textContent = t("players3");
+      btnPick4.textContent = t("players4");
+      document.getElementById("turnOverlayText").textContent = t("tapPlay");
+      btnPlay.textContent = t("play");
+      document.getElementById("extensionTitle").textContent = t("optionalExtension");
+      btnTryAgain.textContent = t("tryAgain");
+      btnNewChallenge.textContent = t("newChallenge");
+      btnCheckBoard.textContent = t("checkBoard");
+      btnBonusNext.textContent = t("nextTurn");
+
       if (!PLAYERS.length) {
         currentEl.textContent = "—";
         diceValEl.textContent = (lastRoll === null) ? "—" : String(lastRoll);
-        turnHintEl.textContent = "Select number of players to start.";
+        turnHintEl.textContent = t("selectPlayersToStart");
         btnRoll.disabled = true;
         btnEndTurn.disabled = true;
         btnReset.disabled = false;
-
         btnBadge.disabled = true;
-        btnBadge.textContent = "✅ Give current player a badge";
+        btnBadge.textContent = t("giveBadge");
         return;
       }
 
@@ -1762,9 +1638,9 @@
 
       if (gameOver) {
         if (boardCheckMode) {
-          turnHintEl.textContent = "Check board and positions. Use “Reset Game” to restart.";
+          turnHintEl.textContent = t("inspectionMode");
         } else {
-          turnHintEl.textContent = "Game over. Press “Check board and positions!”";
+          turnHintEl.textContent = t("gameOver");
         }
         btnRoll.disabled = true;
         btnEndTurn.disabled = true;
@@ -1774,16 +1650,16 @@
         btnReset.disabled = false;
 
         if (!turnActive) {
-          turnHintEl.textContent = "Press “Play!” to start the turn.";
+          turnHintEl.textContent = t("pressPlayTurn");
           btnRoll.disabled = true;
         } else {
           btnRoll.disabled = false;
-          turnHintEl.textContent = "Roll the dice.";
+          turnHintEl.textContent = t("rollNow");
         }
       }
 
       if (waitingBonusAck && !gameOver) {
-        turnHintEl.textContent = "Bonus applied. Press “Next player turn!”";
+        turnHintEl.textContent = t("bonusApplied");
         btnRoll.disabled = true;
         btnEndTurn.disabled = true;
       }
@@ -1795,11 +1671,8 @@
       }
 
       diceValEl.textContent = (lastRoll === null) ? "—" : String(lastRoll);
-
       btnBadge.disabled = badgeAwardedThisTurn || gameOver || waitingBonusAck || boardCheckMode;
-      btnBadge.textContent = badgeAwardedThisTurn
-        ? "✅ Badge already awarded this turn"
-        : "✅ Give current player a badge";
+      btnBadge.textContent = badgeAwardedThisTurn ? t("badgeAlready") : t("giveBadge");
     }
 
     function renderPlayers() {
@@ -1809,7 +1682,7 @@
         const msg = document.createElement("div");
         msg.className = "muted";
         msg.style.padding = "8px 2px";
-        msg.textContent = "Choose 2, 3, or 4 players to begin.";
+        msg.textContent = t("choosePlayers");
         playersEl.appendChild(msg);
         return;
       }
@@ -1828,8 +1701,8 @@
         const text = document.createElement("div");
         const star = (idx === current && !gameOver && !boardCheckMode) ? " ⭐" : "";
         text.innerHTML = `
-          <div class="playerName" style="color:${p.color}">${p.name}${star}</div>
-          <div class="playerMeta">Position: ${p.pos + 1}/${BOARD_TILES}</div>
+          <div class="playerName" style="color:${p.color}">${t("player")} ${p.id}${star}</div>
+          <div class="playerMeta">${t("position")}: ${p.pos + 1}/${BOARD_TILES}</div>
         `;
 
         left.appendChild(token);
@@ -1840,7 +1713,7 @@
         if (p.badges === 0) {
           const empty = document.createElement("span");
           empty.className = "badge";
-          empty.textContent = "0 badges";
+          empty.textContent = `0 ${t("badges")}`;
           badges.appendChild(empty);
         } else {
           for (let i = 0; i < p.badges; i++) {
@@ -1864,12 +1737,13 @@
 
     function renderBoard() {
       boardEl.innerHTML = "";
-      boardWords.forEach((word, i) => {
+
+      boardTilesData.forEach((tileData, i) => {
         const tile = document.createElement("div");
         tile.className = "tile";
         tile.dataset.index = i;
 
-        const cat = categoryFor(word);
+        const cat = categoryFor(tileData.key);
         tile.dataset.cat = cat;
         const pal = CATEGORY[cat] || CATEGORY.general;
         tile.style.setProperty("--cat-border", pal.border);
@@ -1891,12 +1765,12 @@
         const img = document.createElement("img");
         img.className = "icon";
         img.alt = "icon";
-        img.src = iconFor(word);
+        img.src = iconFor(tileData.key);
         img.onerror = () => { img.remove(); };
 
         const title = document.createElement("div");
         title.className = "tileTitle";
-        title.textContent = word;
+        title.textContent = tileLabel(tileData);
 
         top.appendChild(img);
         top.appendChild(title);
@@ -1910,7 +1784,8 @@
         tile.appendChild(meta);
 
         tile.addEventListener("click", () => openTile(i));
-        tile.addEventListener("touchstart", () => { }, { passive: true });
+        tile.addEventListener("touchstart", () => {}, { passive: true });
+
         boardEl.appendChild(tile);
       });
     }
@@ -1920,29 +1795,27 @@
       if (gameOver || waitingBonusAck || boardCheckMode) return;
 
       selectedTileIndex = i;
-      const word = boardWords[i];
-      const challenge = pickChallenge(word);
+      const tileData = boardTilesData[i];
+      const challenge = pickChallenge(tileData);
       const p = PLAYERS[current];
 
-      modalTitle.textContent = word;
+      modalTitle.textContent = tileLabel(tileData);
 
       let diceInfo = "";
       if (lastRoll !== null) {
-        diceInfo = ` Dice result: ${lastRoll} •`;
+        diceInfo = ` ${t("diceResult")}: ${lastRoll} •`;
       }
 
       let moveInfo = "";
       if (pendingMove && pendingMove.playerIndex === current) {
-        moveInfo = ` Pending move: ${pendingMove.from + 1} → ${pendingMove.to + 1}`;
+        moveInfo = ` ${t("pendingMove")}: ${pendingMove.from + 1} → ${pendingMove.to + 1}`;
       }
 
-      modalMeta.textContent = `Tile #${i + 1} • Current: Player ${p.id} •${diceInfo}${moveInfo}`;
-
+      modalMeta.textContent = `${t("tile")} #${i + 1} • ${t("current")}: ${t("player")} ${p.id} •${diceInfo}${moveInfo}`;
       challengeBox.innerHTML = `<b>${challenge.title}</b><div>${challenge.text}</div>`;
       extensionBox.textContent = challenge.ext;
 
       updateHeader();
-
       modalBackdrop.style.display = "flex";
       modalBackdrop.setAttribute("aria-hidden", "false");
     }
@@ -1956,8 +1829,10 @@
       if (!PLAYERS.length) return;
       if (gameOver || waitingBonusAck || boardCheckMode) return;
       const p = PLAYERS[current];
-      turnMsg.textContent = `Player ${p.id} it’s your turn!`;
+      turnMsg.textContent = t("yourTurn")(p.id);
       turnMsg.style.color = p.color;
+      document.getElementById("turnOverlayText").textContent = t("tapPlay");
+      btnPlay.textContent = t("play");
       turnOverlay.style.display = "flex";
       turnOverlay.setAttribute("aria-hidden", "false");
     }
@@ -1973,19 +1848,15 @@
       const w = PLAYERS[winnerIndex];
       gameOver = true;
       waitingBonusAck = false;
-      boardCheckMode = false; // only locks after pressing "Check board..."
+      boardCheckMode = false;
 
-      try {
-        sfxSuccess.currentTime = 0;
-        sfxSuccess.play();
-      } catch (err) { }
+      try { sfxSuccess.currentTime = 0; sfxSuccess.play(); } catch (err) {}
 
-      winTitle.textContent = `Congratulations Player ${w.id}! You won the Biodiversity Battle!`;
+      winTitle.textContent = t("congratsWinner")(w.id);
       winTitle.style.color = w.color;
-
-      // hide subtitle (scoreboard comes right after)
       winSubtitle.textContent = "";
       winSubtitle.style.display = "none";
+      btnCheckBoard.textContent = t("checkBoard");
 
       scoreTable.innerHTML = "";
       PLAYERS.forEach((p) => {
@@ -2002,8 +1873,8 @@
 
         const name = document.createElement("div");
         name.className = "scoreName";
-        name.textContent = `Player ${p.id}`;
-        name.style.color = p.color; // ✅ nome com a cor do jogador
+        name.textContent = `${t("player")} ${p.id}`;
+        name.style.color = p.color;
 
         left.appendChild(dot);
         left.appendChild(name);
@@ -2015,12 +1886,10 @@
         row.appendChild(left);
         row.appendChild(badges);
 
-        // glow for EVERY player row
         row.style.setProperty("--rowBorder", hexToRgba(p.color, 0.35));
         row.style.setProperty("--rowGlow", hexToRgba(p.color, 0.18));
         row.style.setProperty("--rowGlowSoft", hexToRgba(p.color, 0.12));
 
-        // stronger glow for winner
         if (p.id === w.id) {
           row.classList.add("isWinner");
           row.style.setProperty("--winBorder", hexToRgba(p.color, 0.50));
@@ -2034,11 +1903,9 @@
       hideTurnOverlay();
       closeModal();
       hideBonusOverlay();
-
       updateHeader();
       renderPlayers();
       renderBoard();
-
       winOverlay.style.display = "flex";
       winOverlay.setAttribute("aria-hidden", "false");
     }
@@ -2052,14 +1919,14 @@
       if (!PLAYERS.length) return;
 
       const p = PLAYERS[playerIndex];
-
       waitingBonusAck = true;
 
-      bonusTitle.textContent = "Bonus Move!";
+      bonusTitle.textContent = t("bonusMove");
       bonusTitle.style.color = p.color;
 
       const badgeStr = (badges > 0) ? "🏅".repeat(badges) : "—";
-      bonusText.textContent = `${p.name} has ${badgeStr} badges. Bonus: ${p.name} moved +${bonusTiles} tiles.`;
+      bonusText.textContent = t("bonusText")(p.name, badgeStr, bonusTiles);
+      btnBonusNext.textContent = t("nextTurn");
 
       bonusOverlay.style.display = "flex";
       bonusOverlay.setAttribute("aria-hidden", "false");
@@ -2091,23 +1958,17 @@
       if (!PLAYERS.length) return showStartOverlay();
       if (!turnActive || gameOver || waitingBonusAck || boardCheckMode) return;
 
-      try {
-        sfxDice.currentTime = 0;
-        sfxDice.play();
-      } catch (err) { }
+      try { sfxDice.currentTime = 0; sfxDice.play(); } catch (err) {}
 
       lastRoll = randInt(1, 6);
       const p = PLAYERS[current];
-
       const to = (p.pos + lastRoll) % BOARD_TILES;
       pendingMove = { playerIndex: current, from: p.pos, to };
-
       turnActive = false;
 
       updateHeader();
       renderPlayers();
       renderBoard();
-
       openTile(to);
     }
 
@@ -2143,7 +2004,6 @@
       hideTurnOverlay();
 
       hasChosenPlayers = false;
-
       PLAYERS = [];
       current = 0;
       lastRoll = null;
@@ -2155,14 +2015,10 @@
       waitingBonusAck = false;
       boardCheckMode = false;
 
-      // restore subtitle defaults (safe)
       winSubtitle.style.display = "";
-      winSubtitle.textContent = "You won the Biodiversity Battle!";
-
       updateHeader();
       renderPlayers();
       renderBoard();
-
       showStartOverlay();
     }
 
@@ -2170,10 +2026,7 @@
       if (!PLAYERS.length) return showStartOverlay();
       if (badgeAwardedThisTurn || gameOver || waitingBonusAck || boardCheckMode) return;
 
-      try {
-        sfxWin.currentTime = 0;
-        sfxWin.play();
-      } catch (err) { }
+      try { sfxWin.currentTime = 0; sfxWin.play(); } catch (err) {}
 
       const p = PLAYERS[current];
 
@@ -2198,11 +2051,9 @@
 
       if (bonusTiles > 0) {
         p.pos = (p.pos + bonusTiles) % BOARD_TILES;
-
         renderPlayers();
         renderBoard();
         closeModal();
-
         updateHeader();
         showBonusOverlay({ playerIndex: current, badges: p.badges, bonusTiles });
         return;
@@ -2210,7 +2061,6 @@
 
       renderPlayers();
       renderBoard();
-
       closeModal();
       nextPlayer();
     }
@@ -2218,17 +2068,36 @@
     function newChallenge() {
       if (!PLAYERS.length) return showStartOverlay();
       if (selectedTileIndex === null || gameOver || waitingBonusAck || boardCheckMode) return;
-      const word = boardWords[selectedTileIndex];
-      const challenge = pickChallenge(word);
+
+      const tileData = boardTilesData[selectedTileIndex];
+      const challenge = pickChallenge(tileData);
       challengeBox.innerHTML = `<b>${challenge.title}</b><div>${challenge.text}</div>`;
       extensionBox.textContent = challenge.ext;
     }
 
-    // Start overlay buttons
+    langToggle.addEventListener("change", () => {
+      LANG = langToggle.checked ? "en" : "pt";
+
+      PLAYERS.forEach((p, i) => {
+        p.name = `${t("player")} ${i + 1}`;
+      });
+
+      updateHeader();
+      renderPlayers();
+      renderBoard();
+
+      if (selectedTileIndex !== null && modalBackdrop.style.display === "flex") {
+        openTile(selectedTileIndex);
+      }
+
+      if (PLAYERS.length && !gameOver && !waitingBonusAck && !boardCheckMode) {
+        turnMsg.textContent = t("yourTurn")(PLAYERS[current].id);
+      }
+    });
+
     btnPick2.addEventListener("click", () => beginWithPlayers(2));
     btnPick3.addEventListener("click", () => beginWithPlayers(3));
     btnPick4.addEventListener("click", () => beginWithPlayers(4));
-
     btnPlay.addEventListener("click", startTurn);
     btnRoll.addEventListener("click", rollDice);
     btnEndTurn.addEventListener("click", nextPlayer);
@@ -2237,10 +2106,7 @@
     btnTryAgain.addEventListener("click", () => {
       if (!PLAYERS.length) return showStartOverlay();
       if (gameOver || waitingBonusAck || boardCheckMode) return;
-      try {
-        sfxFail.currentTime = 0;
-        sfxFail.play();
-      } catch (err) { }
+      try { sfxFail.currentTime = 0; sfxFail.play(); } catch (err) {}
       closeAndAdvanceNoBadge();
     });
 
@@ -2251,14 +2117,11 @@
       if (!PLAYERS.length) return showStartOverlay();
       if (!gameOver) return;
 
-      // enter inspection mode: disable everything except Reset Game
       boardCheckMode = true;
-
       hideWinOverlay();
       closeModal();
       hideBonusOverlay();
       hideTurnOverlay();
-
       updateHeader();
       renderPlayers();
       renderBoard();
@@ -2285,12 +2148,10 @@
       }
     });
 
-    // Initial render
     updateHeader();
     renderPlayers();
     renderBoard();
     showStartOverlay();
   </script>
 </body>
-
 </html>
