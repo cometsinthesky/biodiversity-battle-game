@@ -4,7 +4,7 @@
 
 ### Disponível agora em português!
 
-Um jogo interativo, pensado para a sala de aula, que apoia a aprendizagem sobre **Biodiversidade / Diversidade dos Seres Vivos** — desenvolvido para contextos de **Middle Years / Anos Finais do Ensino Fundamental (Year 6–9)** e adaptável a diferentes currículos.
+Um jogo interativo, pensado para a sala de aula, que apoia a aprendizagem sobre **Biodiversidade / Diversidade dos Seres Vivos** - desenvolvido para contextos de Anos Finais do Ensino Fundamental (6º a 9º ano)** e adaptável a diferentes currículos.
 
 Este projeto é ideal para professores que desejam uma forma rápida e envolvente de reforçar:
 - noções básicas de classificação e taxonomia
@@ -34,9 +34,9 @@ Para manter a atividade produtiva:
 2. **Jogue para aprender**: o foco deve estar no raciocínio, e não apenas em “marcar pontos”.
 3. **Explique suas escolhas**: ao selecionar uma resposta, justifique com evidências.
 4. **Respeite a vez do outro** (duplas/grupos): um controla, o outro explica; depois, troquem os papéis.
-5. **Sem spoilers**: não grite respostas para outros grupos — em vez disso, faça perguntas que ajudem a pensar.
+5. **Sem spoilers**: não grite respostas para outros grupos - em vez disso, faça perguntas que ajudem a pensar.
 6. **Use vocabulário científico**: desafie-se a usar os termos corretos.
-7. **Seja gentil e colaborativo**: divergências fazem parte da ciência — conversem com respeito.
+7. **Seja gentil e colaborativo**: divergências fazem parte da ciência - conversem com respeito.
 
 ## Perguntas do Professor (Durante o Jogo)
 
@@ -68,6 +68,6 @@ Funciona muito bem com objetivos relacionados a:
 ## ✉️ Contato
 
 Criado por Lucas Ferreira (Mestre em Ensino de Física, doutorando em Educação em Ciências pela UnB/IF/PPGEduC).  
-Se você utilizar este jogo em sua sala de aula, ficarei muito feliz em saber como foi a experiência — feedbacks e sugestões são muito bem-vindos!
+Se você utilizar este jogo em sua sala de aula, ficarei muito feliz em saber como foi a experiência - feedbacks e sugestões são muito bem-vindos!
 
 **Email:** [lucasferreiraunb@gmail.com](mailto:lucasferreiraunb@gmail.com)
